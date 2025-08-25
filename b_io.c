@@ -48,3 +48,21 @@ typedef struct b_fcb
 	} b_fcb;
 	
 b_fcb fcbArray[MAXFCBS];
+
+int startup = 0;	//Indicates that this has not been initialized
+
+//Method to initialize our file system
+void b_init ()
+	{
+		//init fcbArray to all free
+		for (int i = 0; i < MAXFCBS; i++)
+			{
+			fcbArray[i].buf = NULL; //indicates a free fcbArray
+			}
+			
+		startup = 1;
+		// Load root directory and set current working directory
+        
+
+        // NOTE: rootDir is already loaded, cwd is handled elsewhere
+        // - Derek
