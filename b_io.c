@@ -82,3 +82,21 @@ void b_init ()
 
 	}
 
+//Method to get a free FCB element
+b_io_fd b_getFCB ()
+	{
+	for (int i = 0; i < MAXFCBS; i++)
+		{
+		if (fcbArray[i].buf == NULL)
+			{
+			return i;		//Not thread safe (But do not worry about it for this assignment)
+			}
+		}
+	return (-1);  //all in use
+	}
+	
+// Interface to open a buffered file
+// Modification of interface for this assignment, flags match the Linux flags for open
+// O_RDONLY, O_WRONLY, or O_RDWR
+
+
