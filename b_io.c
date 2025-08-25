@@ -100,3 +100,22 @@ b_io_fd b_getFCB ()
 // O_RDONLY, O_WRONLY, or O_RDWR
 
 
+
+//This part is the assignment original code. 
+
+// b_io_fd b_open (char * filename, int flags)
+// 	{
+// 	b_io_fd returnFd;
+
+// 	//*** TODO ***:  Modify to save or set any information needed
+// 	//
+// 	//
+		
+// 	if (startup == 0) b_init();  //Initialize our system
+	
+// 	returnFd = b_getFCB();				// get our own file descriptor
+// 										// check for error - all used FCB's
+	
+// 	return (returnFd);						// all set
+// 	}
+
