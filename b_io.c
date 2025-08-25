@@ -66,3 +66,19 @@ void b_init ()
 
         // NOTE: rootDir is already loaded, cwd is handled elsewhere
         // - Derek
+
+        /* 
+		rootDir = loadDir(&((dirEntry)
+		{
+			.blockLoc = vcb->rootLocation,
+			.size = vcb->rootSize * vcb->blockSize,
+			.isDir = 1
+		}));
+		cwDir = rootDir;
+		if (cwDir == NULL) {
+			printf("ERROR: b_init failed to load rootDir\n");
+		}
+        */
+
+	}
+
