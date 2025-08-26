@@ -52,3 +52,13 @@ else
 	ARCHOBJ=fsLow.o
 endif
 
+OBJ = $(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ARCHOBJ)
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS) 
+
+$(ROOTNAME)$(HW)$(FOPTION): $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS) -lm -l readline -l $(LIBS)
+
+clean:
+	rm $(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ROOTNAME)$(HW)$(FOPTION)
