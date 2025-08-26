@@ -33,3 +33,22 @@
 # will delete the executable and any object files in your directory.
 #
 
+
+ROOTNAME=fsshell
+HW=
+FOPTION=
+RUNOPTIONS=SampleVolume 10000000 512
+CC=gcc
+CFLAGS= -g -I.
+LIBS =pthread
+DEPS = 
+# Add any additional objects to this list
+ADDOBJ= fsInit.o vcb.o freeSpace.o bitmap.o dirEntry.o parsePath.o dirFunc.o fs_utility.o fs_stat.o fs_delete.o b_io.o
+ARCH = $(shell uname -m)
+
+ifeq ($(ARCH), aarch64)
+	ARCHOBJ=fsLowM1.o 
+else
+	ARCHOBJ=fsLow.o
+endif
+
