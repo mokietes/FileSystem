@@ -119,3 +119,24 @@ b_io_fd b_getFCB ()
 // 	return (returnFd);						// all set
 // 	}
 
+b_io_fd b_open(char *filename, int flags)
+{
+    if (startup == 0) b_init();
+
+    b_io_fd fd = b_getFCB();  // get free file control block
+    if (fd < 0) return -1;
+
+    ppInfo info;
+    if (parsePath(filename, &info) != 0)
+        return -1;
+
+    dirEntry *target = NULL;
+
+    if (info.index == -1) {
+        if (!(flags & O_CREAT)) return -1;
+
+        target = findFreeDirEntry(info.parent);
+        if (!target) return -1;
+
+        int block = allocBlocks(1);
+        if (block == -1) return -1;
