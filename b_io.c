@@ -140,3 +140,24 @@ b_io_fd b_open(char *filename, int flags)
 
         int block = allocBlocks(1);
         if (block == -1) return -1;
+
+        time_t now = time(NULL);
+        strncpy(target->name, info.lastElement, MAX_NAME);
+        target->name[MAX_NAME] = '\0';
+        target->isDir = 0;
+        target->size = 0;
+        target->blockLoc = block;
+        target->createTime = now;
+        target->modifyTime = now;
+        target->accessTime = now;
+
+        saveDir(info.parent);
+    } else {
+        target = &info.parent[info.index];
+
+        time_t now = time(NULL);
+        target->accessTime = now;
+        target->modifyTime = now;
+        if (target->isDir) return -1;
+    }
+
