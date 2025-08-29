@@ -175,3 +175,30 @@ b_io_fd b_open(char *filename, int flags)
     return fd;
 }
 
+// Interface to seek function	
+int b_seek(b_io_fd fd, off_t offset, int whence)
+{
+	// Ensure system is initialized
+    if (startup == 0) b_init();
+    if (fd < 0 || fd >= MAXFCBS || fcbArray[fd].buf == NULL)
+        return -1;
+
+    b_fcb *fcb = &fcbArray[fd];
+
+    switch (whence) {
+		// Set pointer to offset
+        case SEEK_SET: fcb->index = offset; break;    
+
+		// Move pointer forward/backward
+        case SEEK_CUR: fcb->index += offset; break;
+
+		// Offset from end
+        case SEEK_END: fcb->index = fcb->fileSize + offset; break;
+        default: return -1;
+    }
+
+    return fcb->index;
+}
+
+
+
