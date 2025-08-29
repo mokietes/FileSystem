@@ -161,3 +161,17 @@ b_io_fd b_open(char *filename, int flags)
         if (target->isDir) return -1;
     }
 
+    fcbArray[fd].buf = malloc(vcb->blockSize);
+    fcbArray[fd].index = 0;
+    fcbArray[fd].buflen = 0;
+    fcbArray[fd].blockLoc = target->blockLoc;
+    fcbArray[fd].fileSize = target->size;
+    fcbArray[fd].flags = flags;
+    fcbArray[fd].dirty = 0;
+    fcbArray[fd].entry = target;
+
+    fcbArray[fd].parent = info.parent;
+
+    return fd;
+}
+
