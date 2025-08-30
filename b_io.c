@@ -235,3 +235,26 @@ int b_write(b_io_fd fd, char *buffer, int count)
 
     return totalWritten;
 }
+
+
+
+
+// Interface to read a buffer
+
+// Filling the callers request is broken into three parts
+// Part 1 is what can be filled from the current buffer, which may or may not be enough
+// Part 2 is after using what was left in our buffer there is still 1 or more block
+//        size chunks needed to fill the callers request.  This represents the number of
+//        bytes in multiples of the blocksize.
+// Part 3 is a value less than blocksize which is what remains to copy to the callers buffer
+//        after fulfilling part 1 and part 2.  This would always be filled from a refill 
+//        of our buffer.
+//  +-------------+------------------------------------------------+--------+
+//  |             |                                                |        |
+//  | filled from |  filled direct in multiples of the block size  | filled |
+//  | existing    |                                                | from   |
+//  | buffer      |                                                |refilled|
+//  |             |                                                | buffer |
+//  |             |                                                |        |
+//  | Part1       |  Part 2                                        | Part3  |
+//  +-------------+------------------------------------------------+--------+
