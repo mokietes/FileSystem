@@ -203,3 +203,35 @@ int b_seek(b_io_fd fd, off_t offset, int whence)
 
 
 
+// Interface to write function	
+int b_write(b_io_fd fd, char *buffer, int count)
+{
+    if (startup == 0) b_init();
+    if (fd < 0 || fd >= MAXFCBS || fcbArray[fd].buf == NULL)
+        return -1;
+
+    b_fcb *fcb = &fcbArray[fd];
+    int totalWritten = 0;
+
+    while (count > 0) {
+        int offset = fcb->index % vcb->blockSize;
+        int space = vcb->blockSize - offset;
+        int toWrite = (count < space) ? count : space;
+
+        if (offset == 0 && fcb->dirty)
+            LBAwrite(fcb->buf, 1, fcb->blockLoc);
+
+        memcpy(fcb->buf + offset, buffer, toWrite);
+        fcb->dirty = 1;
+
+        fcb->index += toWrite;
+        if (fcb->index > fcb->fileSize)
+            fcb->fileSize = fcb->index;
+
+        buffer += toWrite;
+        count -= toWrite;
+        totalWritten += toWrite;
+    }
+
+    return totalWritten;
+}
