@@ -329,3 +329,4 @@ int b_close(b_io_fd fd)
     memset(fcb, 0, sizeof(b_fcb));
 
     return 0;
+}
