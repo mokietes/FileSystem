@@ -305,3 +305,27 @@ int b_read(b_io_fd fd, char *buffer, int count)
     return totalRead;
 }
 
+	
+// Interface to Close the file	
+int b_close(b_io_fd fd)
+{
+	// Validate descriptor
+    if (fd < 0 || fd >= MAXFCBS) return -1;
+    b_fcb *fcb = &fcbArray[fd];
+
+	// If buffer modified write to disk
+    if (fcb->dirty)
+        LBAwrite(fcb->buf, 1, fcb->blockLoc);
+
+	// Save updated file size and modify time
+    fcb->entry->size = fcb->fileSize;
+    fcb->entry->modifyTime = time(NULL);
+
+	//Save parent's directory changes
+    saveDir(fcb->parent);
+    
+	//Free buffer as well as reset VCB
+    free(fcb->buf);
+    memset(fcb, 0, sizeof(b_fcb));
+
+    return 0;
