@@ -272,3 +272,20 @@ int b_write(b_io_fd fd, char *buffer, int count)
 // 	return (0);	//Change this
 // 	}
 
+int b_read(b_io_fd fd, char *buffer, int count)
+{
+	//initiate system
+    if (startup == 0) b_init();
+
+	// Invalid file descriptor
+    if (fd < 0 || fd >= MAXFCBS || fcbArray[fd].buf == NULL)
+        return -1;
+
+    b_fcb *fcb = &fcbArray[fd];   // Get file control block
+    int totalRead = 0;
+
+    while (count > 0 && fcb->index < fcb->fileSize) {
+        int offset = fcb->index % vcb->blockSize;		// Offset inside the block
+        int space = vcb->blockSize - offset;			// Space left in block
+        int toRead = (count < space) ? count : space;	// Read only what fits
+
