@@ -289,3 +289,19 @@ int b_read(b_io_fd fd, char *buffer, int count)
         int space = vcb->blockSize - offset;			// Space left in block
         int toRead = (count < space) ? count : space;	// Read only what fits
 
+		// Load block from disk
+        LBAread(fcb->buf, 1, fcb->blockLoc);
+
+		// Copy to user's buffer
+        memcpy(buffer, fcb->buf + offset, toRead);
+
+		// Move file pointer
+        fcb->index += toRead;
+        buffer += toRead;
+        count -= toRead;
+        totalRead += toRead;
+    }
+
+    return totalRead;
+}
+
