@@ -258,3 +258,17 @@ int b_write(b_io_fd fd, char *buffer, int count)
 //  |             |                                                |        |
 //  | Part1       |  Part 2                                        | Part3  |
 //  +-------------+------------------------------------------------+--------+
+// int b_read (b_io_fd fd, char * buffer, int count)
+// 	{
+
+// 	if (startup == 0) b_init();  //Initialize our system
+
+// 	// check that fd is between 0 and (MAXFCBS-1)
+// 	if ((fd < 0) || (fd >= MAXFCBS))
+// 		{
+// 		return (-1); 					//invalid file descriptor
+// 		}
+		
+// 	return (0);	//Change this
+// 	}
+
