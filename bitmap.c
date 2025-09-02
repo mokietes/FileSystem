@@ -19,3 +19,20 @@
 #include "freeSpace.h"
 
 extern char *freeSpaceMap;
+
+// set bit at position to 1, uses bitwise or with mask
+int setBit(int bitmapIndex)
+{
+    if (freeSpaceMap == NULL) {
+        return -1;
+    }
+    
+    int byteIndex = bitmapIndex / BYTE_BITS;
+    int bitOffset = bitmapIndex % BYTE_BITS;
+    unsigned char mask = 1 << bitOffset;
+    
+    freeSpaceMap[byteIndex] |= mask;
+    return 0;
+
+}
+
