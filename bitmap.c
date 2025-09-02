@@ -36,3 +36,28 @@ int setBit(int bitmapIndex)
 
 }
 
+// this function uses bitwise and with a complement mask to clear the bit
+// the complement mask has all bits set to 1 except the target bit
+int clearBit(int bitmapIndex)
+{
+    // validates input parameters
+    if (freeSpaceMap == NULL) {
+        return -1;  // error: NULL bitmap pointer
+    }
+    
+    // calculates which byte contains our target bit
+    int byteIndex = bitmapIndex / BYTE_BITS;
+    
+    // calculates which bit position within that byte (0-7)
+    int bitOffset = bitmapIndex % BYTE_BITS;
+    
+    // creates a mask with only the target bit set to 1
+    unsigned char mask = 1 << bitOffset;
+    
+    // uses bitwise AND with complement to clear the bit
+    // and with 0 always clears the bit, AND with 1 preserves the bit
+    freeSpaceMap[byteIndex] &= ~mask;
+    
+    return 0;
+}
+
