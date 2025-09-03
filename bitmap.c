@@ -61,3 +61,26 @@ int clearBit(int bitmapIndex)
     return 0;
 }
 
+// toggles a specific bit in a byte array
+int toggleBit(int bitmapIndex)
+{
+    // validates input parameters
+    if (freeSpaceMap == NULL) {
+        return -1;  // Error: NULL bitmap pointer
+    }
+    
+    // calculates which byte contains our target bit
+    int byteIndex = bitmapIndex / BYTE_BITS;
+    
+    // calculates which bit position within that byte (0-7)
+    int bitOffset = bitmapIndex % BYTE_BITS;
+    
+    // creates a mask with only the target bit set to 1
+    unsigned char mask = 1 << bitOffset;
+    
+    // uses bitwise XOR to toggle the bit
+    // XOR with 1 flips the bit, XOR with 0 preserves the bit
+    freeSpaceMap[byteIndex] ^= mask;
+    
+    return 0;
+}
