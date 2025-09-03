@@ -12,3 +12,12 @@
 * prototypes for modifying a bit in the free space bitmap.
 *
 **************************************************************/
+
+#ifndef BITMAP_H
+#define BITMAP_H
+
+int setBit(int bitmapIndex);
+int clearBit(int bitmapIndex);
+int toggleBit(int bitmapIndex);
+
+#endif
