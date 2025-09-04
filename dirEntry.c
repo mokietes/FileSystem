@@ -37,3 +37,19 @@ void writeDir(dirEntry *dir, int blocksNeeded, int blockLoc) {
     LBAwrite(dir, blocksNeeded, blockLoc);
 }
 
+
+// int allocBlocks(int numBlocks); // Returns LBA location (e.g., 100)
+// void writeDir(dirEntry *dir, int blocksNeeded, int blockLoc); // Wraps LBAwrite
+
+dirEntry * createDir(int countEntries, dirEntry *parent) {
+    //if (countEntries < MIN_ENTRIES) countEntries = MIN_ENTRIES;
+    int blockSize = vcb->blockSize;
+
+    int memNeeded = countEntries * sizeof(dirEntry);
+    int blocksNeeded = (memNeeded + blockSize - 1) / blockSize;
+    int memActual = blocksNeeded * blockSize;
+
+    dirEntry *newDir = (dirEntry *) malloc(memActual); // Zero-initialized
+
+    int actualEntries = memActual / sizeof(dirEntry);
+
