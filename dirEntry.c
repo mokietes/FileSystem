@@ -53,3 +53,14 @@ dirEntry * createDir(int countEntries, dirEntry *parent) {
 
     int actualEntries = memActual / sizeof(dirEntry);
 
+    // Initialize empty entries
+    for (int i = 2; i < actualEntries; i++) {
+        newDir[i].name[0] = '\0';
+        newDir[i].blockLoc = -1;
+        newDir[i].isDir = 0;
+        newDir[i].size = 0;
+        newDir[i].createTime = 0;
+        newDir[i].modifyTime = 0;
+        newDir[i].accessTime = 0;
+    }
+
