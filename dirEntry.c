@@ -16,3 +16,24 @@
 * Loading and saving the root directory from/to disk using 
 * loadRootDir() and saveRootDir().
 **************************************************************/
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <sys/types.h>
+
+#include "dirEntry.h"
+#include "fsLow.h"
+#include "vcb.h"
+#include "freeSpace.h"
+
+#define MIN_ENTRIES 4   // minimum entries per directory
+
+dirEntry *rootDir;
+dirEntry *cwDir;
+
+//Temp for writing directory to disk
+void writeDir(dirEntry *dir, int blocksNeeded, int blockLoc) {
+    LBAwrite(dir, blocksNeeded, blockLoc);
+}
+
