@@ -64,3 +64,17 @@ dirEntry * createDir(int countEntries, dirEntry *parent) {
         newDir[i].accessTime = 0;
     }
 
+    time_t t = time(NULL);
+    int loc = allocBlocks(blocksNeeded); // LBA block where this dir starts
+
+    // Self-entry `.`
+    strcpy(newDir[0].name, ".");
+    newDir[0].size = sizeof(dirEntry) * actualEntries;
+    newDir[0].blockLoc = loc;
+    newDir[0].createTime = t;
+    newDir[0].modifyTime = t;
+    newDir[0].accessTime = t;
+    newDir[0].isDir = 1;
+
+    // Parent-entry `..`
+    strcpy(newDir[1].name, "..");
