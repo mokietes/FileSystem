@@ -78,3 +78,16 @@ dirEntry * createDir(int countEntries, dirEntry *parent) {
 
     // Parent-entry `..`
     strcpy(newDir[1].name, "..");
+    if (parent == NULL) {
+        // Root directory: parent is self
+        newDir[1].blockLoc = loc;
+        newDir[1].size = newDir[0].size;
+        newDir[1].isDir = 1;
+        newDir[1].createTime = t;
+        newDir[1].modifyTime = t;
+        newDir[1].accessTime = t;
+    } else {
+        newDir[1] = parent[0]; // Copy parent self-entry
+        strcpy(newDir[1].name, "..");
+    }
+
