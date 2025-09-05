@@ -91,3 +91,9 @@ dirEntry * createDir(int countEntries, dirEntry *parent) {
         strcpy(newDir[1].name, "..");
     }
 
+    // Write directory to disk
+    writeDir(newDir, blocksNeeded, loc);
+
+    return newDir; // might just return loc in your design
+}
+
