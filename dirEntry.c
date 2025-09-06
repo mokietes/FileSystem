@@ -97,3 +97,15 @@ dirEntry * createDir(int countEntries, dirEntry *parent) {
     return newDir; // might just return loc in your design
 }
 
+
+void initRootDir() {
+    int rootEntries = DEFAULT_ENTRIES * ROOT_ENTRIES_MULT;
+    rootDir = createDir(rootEntries, NULL);
+    
+    if (rootDir == NULL) {
+        printf("Failed to create root directory\n");
+        return;
+    }
+
+    cwDir = rootDir;
+
