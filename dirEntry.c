@@ -133,6 +133,9 @@ void saveRootDir() {
         return;
     }
     
+    // printf("Root directory saved successfully to block %d\n", vcb->rootLocation);
+}
+
 void safeFree(dirEntry *de) {
     if (de == NULL || de == rootDir || de == cwDir) {
         return;
