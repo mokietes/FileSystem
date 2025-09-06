@@ -109,3 +109,14 @@ void initRootDir() {
 
     cwDir = rootDir;
 
+    // updates VCB with root directory information
+    // calculates the size of root directory in blocks
+    int blockSize = vcb->blockSize;
+    int rootSize = (rootDir->size + blockSize - 1) / blockSize;
+    vcb->rootLocation = rootDir->blockLoc;
+    vcb->rootSize = rootSize;
+    
+    printf("Root directory created successfully at block %d with %d entries\n", 
+        vcb->rootLocation, rootEntries);
+}
+
