@@ -120,6 +120,17 @@ void initRootDir() {
         vcb->rootLocation, rootEntries);
 }
 
+void loadRootDir() {
+    // loads root directory from disk
+    if (vcb == NULL) {
+        printf("VCB not initialized, cannot load root directory\n");
+        return;
+    }
+    
+    // calculates how many directory entries fit in the root directory blocks
+    int rootBytes = vcb->rootSize * vcb->blockSize;
+    int rootEntries = rootBytes / sizeof(dirEntry);
+    
 void saveRootDir() {
     // saves root directory to disk
     if (rootDir == NULL || vcb == NULL) {
