@@ -140,6 +140,18 @@ void loadRootDir() {
 
     cwDir = rootDir;
     
+    // reads root directory from disk
+    if (LBAread(rootDir, vcb->rootSize, vcb->rootLocation) != vcb->rootSize) {
+        printf("Failed to read root directory from disk\n");
+        free(rootDir);
+        rootDir = NULL;
+        return;
+    }
+    
+    printf("Root directory loaded successfully from block %d with %d entries\n", 
+           vcb->rootLocation, rootEntries);
+}
+
 void saveRootDir() {
     // saves root directory to disk
     if (rootDir == NULL || vcb == NULL) {
