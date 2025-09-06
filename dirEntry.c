@@ -120,3 +120,10 @@ void initRootDir() {
         vcb->rootLocation, rootEntries);
 }
 
+void safeFree(dirEntry *de) {
+    if (de == NULL || de == rootDir || de == cwDir) {
+        return;
+    }
+
+    free(de);
+}
