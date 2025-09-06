@@ -120,6 +120,19 @@ void initRootDir() {
         vcb->rootLocation, rootEntries);
 }
 
+void saveRootDir() {
+    // saves root directory to disk
+    if (rootDir == NULL || vcb == NULL) {
+        printf("Root directory or VCB not initialized, cannot save\n");
+        return;
+    }
+    
+    // writes root directory to disk
+    if (LBAwrite(rootDir, vcb->rootSize, vcb->rootLocation) != vcb->rootSize) {
+        printf("Failed to write root directory to disk\n");
+        return;
+    }
+    
 void safeFree(dirEntry *de) {
     if (de == NULL || de == rootDir || de == cwDir) {
         return;
