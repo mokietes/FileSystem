@@ -131,6 +131,15 @@ void loadRootDir() {
     int rootBytes = vcb->rootSize * vcb->blockSize;
     int rootEntries = rootBytes / sizeof(dirEntry);
     
+    // allocates memory for root directory
+    rootDir = malloc(rootBytes);
+    if (rootDir == NULL) {
+        printf("Failed to allocate memory for root directory\n");
+        return;
+    }
+
+    cwDir = rootDir;
+    
 void saveRootDir() {
     // saves root directory to disk
     if (rootDir == NULL || vcb == NULL) {
