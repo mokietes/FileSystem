@@ -1,0 +1,25 @@
+/**************************************************************
+* Class::  CSC-415-01 Summer 2025
+* Name:: Derek Yang, Mekonnen Tesfazien, Andrew Brockenborough,
+* Geetarth Meduri
+* Student IDs:: 923752034 , 923676946 , 921749371, 920455884
+* GitHub-Name:: thats-not-my-name , mokietes, andrewb-03,
+* Geetarty
+* Group-Name:: Team Epsilon
+* Project:: Epsilon File System
+*
+* File:: freeSpace.c
+*
+* Description:: This file contains the functions for
+* initializing the free space bitmap and allocating blocks
+* from the total free space.
+*
+**************************************************************/
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+
+#include "freeSpace.h"
+#include "fsLow.h"
+#include "bitmap.h"
+#include "vcb.h"
