@@ -35,3 +35,11 @@ typedef struct dirEntry {
 extern dirEntry *rootDir;
 extern dirEntry *cwDir;
 
+dirEntry * createDir(int countEntries, dirEntry *parent);
+void writeDir(dirEntry *dir, int blocksNeeded, int blockLoc);
+void initRootDir();
+void loadRootDir();
+void saveRootDir();
+void safeFree(dirEntry *de);
+
+#endif
