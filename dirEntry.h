@@ -32,3 +32,6 @@ typedef struct dirEntry {
     char isDir;              // 1 = dir, 0 = file
 } dirEntry;
 
+extern dirEntry *rootDir;
+extern dirEntry *cwDir;
+
