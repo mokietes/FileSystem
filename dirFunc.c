@@ -34,3 +34,26 @@ int fs_mkdir(const char *pathname, mode_t mode) {
     char *pathCopy = strdup(pathname);
     if (pathCopy == NULL) return -1;
 
+    ppRet = parsePath(pathCopy, &ppi);
+
+    // Check if path is valid
+    if (ppRet != 0) return -1;
+
+    // Check if last element of the path already exists in its parent
+    if (ppi.index != -1) return -2;
+
+    // Create new directory in its parent
+    dirEntry *newDir = createDir(DEFAULT_ENTRIES, ppi.parent);
+
+    // Link the new directory to its parent through
+    // a new directory entry it its parent
+    dirEntry *newEntry = findFreeDirEntry(ppi.parent);
+
+    newEntry->size = newDir[0].size;
+    newEntry->createTime = newDir[0].createTime;
+    newEntry->modifyTime = newDir[0].modifyTime;
+    newEntry->accessTime = newDir[0].accessTime;
+    newEntry->blockLoc = newDir[0].blockLoc;
+    newEntry->isDir = newDir[0].isDir;
+    strncpy(newEntry->name, ppi.lastElement, MAX_NAME);
+
