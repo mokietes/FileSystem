@@ -14,3 +14,23 @@
 *
 **************************************************************/
 
+#include <stdio.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "mfs.h"
+#include "fsLow.h"
+#include "dirFunc.h"
+#include "parsePath.h"
+#include "vcb.h"
+#include "freeSpace.h"
+#include "fs_utility.h"
+
+int fs_mkdir(const char *pathname, mode_t mode) {
+    ppInfo ppi;
+    int ppRet;
+
+    char *pathCopy = strdup(pathname);
+    if (pathCopy == NULL) return -1;
+
