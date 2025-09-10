@@ -57,3 +57,14 @@ int fs_mkdir(const char *pathname, mode_t mode) {
     newEntry->isDir = newDir[0].isDir;
     strncpy(newEntry->name, ppi.lastElement, MAX_NAME);
 
+    // Save directory to disk
+    saveDir(ppi.parent);
+
+    free(newDir);
+    newDir = NULL;
+    safeFree(ppi.parent); // NOT ROOT OR CWD
+    ppi.parent = NULL;
+
+    return 0;
+}
+
