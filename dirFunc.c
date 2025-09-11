@@ -92,3 +92,20 @@ int fs_rmdir(const char *pathname) {
         ppi.parent = NULL;
         return -1;
     }
+
+    dirEntry *thisDir = loadDir(&ppi.parent[ppi.index]);
+    if (thisDir == NULL) {
+        safeFree(ppi.parent);
+        ppi.parent = NULL;
+        return -1;
+    }
+
+    // Check if the directory is empty
+    if (isDirEmpty(thisDir) != 1) {
+        free(thisDir);
+        thisDir = NULL;
+        safeFree(ppi.parent);
+        ppi.parent = NULL;
+        return -2;
+    }
+
