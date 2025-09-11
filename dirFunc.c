@@ -68,3 +68,27 @@ int fs_mkdir(const char *pathname, mode_t mode) {
     return 0;
 }
 
+int fs_rmdir(const char *pathname) {
+    ppInfo ppi;
+    int ppRet;
+
+    char *pathCopy = strdup(pathname);
+    if (pathCopy == NULL) return -1;
+
+    ppRet = parsePath(pathCopy, &ppi);
+
+    // Check if path is valid
+    if (ppRet != 0) return -1;
+
+    // Check if last element of the path doesn't exist in the parent
+    if (ppi.index == -1) return -1;
+
+    // Check if it is the root
+    if (ppi.index == -2) return -1; 
+
+    // Check if last element of the path is a directory
+    if (fs_isDir(pathCopy) != 1) {
+        safeFree(ppi.parent);
+        ppi.parent = NULL;
+        return -1;
+    }
