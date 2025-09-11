@@ -109,3 +109,18 @@ int fs_rmdir(const char *pathname) {
         return -2;
     }
 
+    int blockSize = vcb->blockSize;
+    int dirBlocks = (thisDir[0].size + blockSize - 1) / blockSize;
+
+    releaseBlocks(thisDir[0].blockLoc, dirBlocks);
+
+    // Mark the directory entry as used
+    ppi.parent[ppi.index].name[0] = '\0';
+    saveDir(ppi.parent);
+
+    free(thisDir);
+    safeFree(ppi.parent); // NOT ROOT OR CWD
+    ppi.parent = NULL;
+
+    return 0;
+}
