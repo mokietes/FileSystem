@@ -143,3 +143,10 @@ dirEntry * findFreeDirEntry(dirEntry *de) {
     return NULL;
 }
 
+int changeDirSize(dirEntry *de, int newCountEntries) {
+    // Check if directory size needs to change
+    int curCountEntries = de[0].size / sizeof(dirEntry);
+    if (curCountEntries == newCountEntries) {
+        return -1;
+    }
+
