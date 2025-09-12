@@ -150,3 +150,18 @@ int changeDirSize(dirEntry *de, int newCountEntries) {
         return -1;
     }
 
+    // Get the block size and number of blocks the directory currently occupies
+    int blockSize = vcb->blockSize;
+    int curBlocks = (de[0].size + blockSize - 1) / blockSize;
+
+    // Calculate needed fields for newCountEntries
+    int memNeeded = newCountEntries * sizeof(dirEntry);
+    int blocksNeeded = (memNeeded + blockSize - 1)/ blockSize;
+    int memActual = blocksNeeded * blockSize;
+    int newActualEntries = memActual / sizeof(dirEntry);
+
+    // Check again if the directory size needs to change, this time comparing blocks
+    if (curBlocks == blocksNeeded) {
+        return -1;
+    }
+
