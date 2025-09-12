@@ -191,3 +191,14 @@ void saveDir(dirEntry *de) {
     LBAwrite(de, dirBlocks, de[0].blockLoc);
 }
 
+int isDirEmpty(dirEntry *de) {
+    int numEntries = de[0].size / sizeof(dirEntry);
+
+    for (int i = 2; i < numEntries; i++) {
+        if (de[i].name[0] != '\0') {
+            return 0;
+        }
+    }
+
+    return 1;
+}
