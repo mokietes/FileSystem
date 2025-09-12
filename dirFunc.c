@@ -165,3 +165,22 @@ int changeDirSize(dirEntry *de, int newCountEntries) {
         return -1;
     }
 
+    // If directory can be shrinked, release the unneeded blocks
+    if (curBlocks > blocksNeeded) {
+        de[0].size = sizeof(dirEntry) * newActualEntries;
+        releaseBlocks(de[0].blockLoc + blocksNeeded, curBlocks - blocksNeeded);
+        return newActualEntries;
+    }
+
+    // If directory needs to expand, relocate the directory and
+    // release the old directory blocks
+    if (curBlocks < blocksNeeded) {
+        dirEntry *newDir = createDir(newCountEntries, &de[1]);
+        memcpy(newDir, de, de[0].size);
+        releaseBlocks(de[0].blockLoc, curBlocks);
+        
+        de = newDir;
+        return newActualEntries;
+    }
+}
+
