@@ -184,3 +184,10 @@ int changeDirSize(dirEntry *de, int newCountEntries) {
     }
 }
 
+void saveDir(dirEntry *de) {
+    int blockSize = vcb->blockSize;
+    int dirBlocks = (de[0].size + blockSize - 1) / blockSize;
+
+    LBAwrite(de, dirBlocks, de[0].blockLoc);
+}
+
