@@ -124,3 +124,22 @@ int fs_rmdir(const char *pathname) {
 
     return 0;
 }
+
+dirEntry * findFreeDirEntry(dirEntry *de) {
+    int numEntries = de[0].size / sizeof(dirEntry);
+
+    for (int i = 0; i < numEntries; i++) {
+        if (de[i].name[0] == '\0') {
+            return &de[i];
+        }
+    }
+
+    int newNumEntries = numEntries * CHANGE_DIR_FACTOR;
+    // call function to expand directory
+    if (changeDirSize(de, newNumEntries) != -1) {
+        return &de[numEntries];
+    }
+
+    return NULL;
+}
+
