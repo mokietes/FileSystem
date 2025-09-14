@@ -31,3 +31,11 @@ dirEntry * findFreeDirEntry(dirEntry *de);
 // returns the new number of entries in the changed directory, or -1 if no change was made
 // this could be greater than the passed in new number of entries
 // NOT intended to be used for the root directory
+int changeDirSize(dirEntry *de, int newCountEntries);
+
+void saveDir(dirEntry *de);
+
+// returns 1 if empty, 0 otherwise
+int isDirEmpty(dirEntry *de);
+
+#endif
