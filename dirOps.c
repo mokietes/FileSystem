@@ -47,3 +47,4 @@ dirEntry* findDirEntry(dirEntry* dir, const char* name) {
     return NULL;
 }
 
+} 
