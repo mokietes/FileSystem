@@ -16,3 +16,18 @@
 *
 **************************************************************/
 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <time.h>
+
+#include "mfs.h"
+#include "dirEntry.h"
+#include "fsLow.h"
+#include "vcb.h"
+#include "freeSpace.h"
+
+#define DEFAULT_ENTRIES 50
+
