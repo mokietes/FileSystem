@@ -31,3 +31,19 @@
 
 #define DEFAULT_ENTRIES 50
 
+// Global current working directory
+static char currentWorkingDir[256] = "/";
+
+// Helper function to find a directory entry by name
+dirEntry* findDirEntry(dirEntry* dir, const char* name) {
+    if (dir == NULL || name == NULL) return NULL;
+    
+    int entries = dir[0].size / sizeof(dirEntry);
+    for (int i = 0; i < entries; i++) {
+        if (dir[i].name[0] != '\0' && strcmp(dir[i].name, name) == 0) {
+            return &dir[i];
+        }
+    }
+    return NULL;
+}
+
