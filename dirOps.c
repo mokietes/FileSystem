@@ -78,4 +78,9 @@ dirEntry* parsePath(const char* path) {
         path++; // Skip leading slash
     }
     
+    // If no path or just "/", return root directory
+    if (path[0] == '\0') {
+        return rootDir;
+    }
+    
 } 
