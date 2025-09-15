@@ -62,4 +62,20 @@ dirEntry* loadDirectory(int blockLoc, int size) {
     return dir;
 }
 
+// Helper function to save a directory to disk
+int saveDirectory(dirEntry* dir, int blockLoc, int size) {
+    if (dir == NULL || blockLoc < 0) return -1;
+    
+    return (LBAwrite(dir, size, blockLoc) == size) ? 0 : -1;
+}
+
+// Helper function to parse path and find the target directory
+dirEntry* parsePath(const char* path) {
+    if (path == NULL) return NULL;
+    
+    // Handle absolute paths
+    if (path[0] == '/') {
+        path++; // Skip leading slash
+    }
+    
 } 
