@@ -47,4 +47,19 @@ dirEntry* findDirEntry(dirEntry* dir, const char* name) {
     return NULL;
 }
 
+// Helper function to load a directory from disk
+dirEntry* loadDirectory(int blockLoc, int size) {
+    if (blockLoc < 0) return NULL;
+    
+    dirEntry* dir = malloc(size * vcb->blockSize);
+    if (dir == NULL) return NULL;
+    
+    if (LBAread(dir, size, blockLoc) != size) {
+        free(dir);
+        return NULL;
+    }
+    
+    return dir;
+}
+
 } 
