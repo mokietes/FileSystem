@@ -118,4 +118,26 @@ dirEntry* parsePath(const char* path) {
     return currentDir;
 }
 
+// Directory iteration functions
+
+// Opens a directory for reading
+fdDir *fs_opendir(const char *pathname) {
+    if (!pathname) return NULL;
+    dirEntry *targetDir = parsePath(pathname);
+    if (!targetDir) return NULL;
+    fdDir *dirp = malloc(sizeof(fdDir));
+    if (!dirp) {
+        if (targetDir != rootDir) free(targetDir);
+        return NULL;
+    }
+    dirp->dirEntryPosition = 0;
+    dirp->directory = targetDir;
+    dirp->di = malloc(sizeof(struct fs_diriteminfo));
+    if (!dirp->di) {
+        free(dirp);
+        if (targetDir != rootDir) free(targetDir);
+        return NULL;
+    }
+    return dirp;
+}
 } 
