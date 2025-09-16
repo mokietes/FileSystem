@@ -83,4 +83,26 @@ dirEntry* parsePath(const char* path) {
         return rootDir;
     }
     
+    // Start from root directory
+    dirEntry* currentDir = rootDir;
+    
+    // Split path by '/' and traverse
+    char* pathCopy = strdup(path);
+    char* token = strtok(pathCopy, "/");
+    
+    while (token != NULL) {
+        dirEntry* entry = findDirEntry(currentDir, token);
+        if (entry == NULL || !entry->isDir) {
+            free(pathCopy);
+            return NULL; // Path not found or not a directory
+        }
+        
+        // Loads the subdirectory
+        int dirSize = (entry->size + vcb->blockSize - 1) / vcb->blockSize;
+        dirEntry* subDir = loadDirectory(entry->blockLoc, dirSize);
+        if (subDir == NULL) {
+            free(pathCopy);
+            return NULL;
+        }
+        
 } 
