@@ -105,4 +105,17 @@ dirEntry* parsePath(const char* path) {
             return NULL;
         }
         
+        // If this was a loaded directory (not root), free the previous one
+        if (currentDir != rootDir) {
+            free(currentDir);
+        }
+        
+        currentDir = subDir;
+        token = strtok(NULL, "/");
+    }
+    
+    free(pathCopy);
+    return currentDir;
+}
+
 } 
