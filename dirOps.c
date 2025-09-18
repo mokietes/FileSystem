@@ -140,4 +140,24 @@ fdDir *fs_opendir(const char *pathname) {
     }
     return dirp;
 }
+
+// Reads the next entry in the directory
+struct fs_diriteminfo *fs_readdir(fdDir *dirp) {
+    if (!dirp || !dirp->directory) return NULL;
+    int entries = dirp->directory[0].size / sizeof(dirEntry);
+    while (dirp->dirEntryPosition < entries) {
+        dirEntry *entry = &dirp->directory[dirp->dirEntryPosition];
+        dirp->dirEntryPosition++;
+        // skips empty, . and ..
+        if (entry->name[0] != '\0' && strcmp(entry->name, ".") != 0 && strcmp(entry->name, "..") != 0) {
+            dirp->di->d_reclen = sizeof(struct fs_diriteminfo);
+            dirp->di->fileType = entry->isDir ? FT_DIRECTORY : FT_REGFILE;
+            strncpy(dirp->di->d_name, entry->name, 255);
+            dirp->di->d_name[255] = '\0';
+            return dirp->di;
+        }
+    }
+    return NULL;
+}
+
 } 
