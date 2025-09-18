@@ -160,4 +160,13 @@ struct fs_diriteminfo *fs_readdir(fdDir *dirp) {
     return NULL;
 }
 
+// Closes the directory iterator and free memory
+int fs_closedir(fdDir *dirp) {
+    if (!dirp) return -1;
+    if (dirp->di) free(dirp->di);
+    if (dirp->directory && dirp->directory != rootDir) free(dirp->directory);
+    free(dirp);
+    return 0;
+}
+
 } 
