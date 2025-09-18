@@ -169,4 +169,15 @@ int fs_closedir(fdDir *dirp) {
     return 0;
 }
 
+// Path utility functions
+
+char* fs_getcwd(char* pathname, size_t size) {
+    if (pathname == NULL || size == 0) return NULL;
+    
+    strncpy(pathname, currentWorkingDir, size - 1);
+    pathname[size - 1] = '\0';
+    
+    return pathname;
+}
+
 } 
