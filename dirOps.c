@@ -180,4 +180,18 @@ char* fs_getcwd(char* pathname, size_t size) {
     return pathname;
 }
 
+int fs_setcwd(char* pathname) {
+    if (pathname == NULL) return -1;
+    
+    // Checks if the path exists and is a directory
+    dirEntry* targetDir = parsePath(pathname);
+    if (targetDir == NULL) {
+        return -1; // Path not found
+    }
+    
+    // Frees the loaded directory if it's not root
+    if (targetDir != rootDir) {
+        free(targetDir);
+    }
+    
 } 
