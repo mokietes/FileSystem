@@ -194,4 +194,20 @@ int fs_setcwd(char* pathname) {
         free(targetDir);
     }
     
+    // Updates current working directory
+    if (pathname[0] == '/') {
+        strncpy(currentWorkingDir, pathname, sizeof(currentWorkingDir) - 1);
+    } else {
+        // Relative path - append to current directory
+        if (strcmp(currentWorkingDir, "/") != 0) {
+            strncat(currentWorkingDir, "/", sizeof(currentWorkingDir) - strlen(currentWorkingDir) - 1);
+        }
+        strncat(currentWorkingDir, pathname, sizeof(currentWorkingDir) - strlen(currentWorkingDir) - 1);
+    }
+    
+    currentWorkingDir[sizeof(currentWorkingDir) - 1] = '\0';
+    
+    return 0;
+}
+
 } 
