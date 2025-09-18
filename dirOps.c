@@ -210,4 +210,19 @@ int fs_setcwd(char* pathname) {
     return 0;
 }
 
+// Directory utility functions
+
+int fs_isFile(char* filename) {
+    if (filename == NULL) return 0;
+    
+    // Parses the path to find the file
+    dirEntry* parentDir = parsePath(filename);
+    if (parentDir == NULL) return 0;
+    
+    // Extracts the filename from the path
+    char* lastSlash = strrchr(filename, '/');
+    char* name = (lastSlash != NULL) ? lastSlash + 1 : filename;
+    
+    // Finds the file in the parent directory
+    dirEntry* entry = findDirEntry(parentDir, name);
 } 
