@@ -234,4 +234,19 @@ int fs_isFile(char* filename) {
     return (entry != NULL && !entry->isDir) ? 1 : 0;
 }
 
+int fs_isDir(char* pathname) {
+    if (pathname == NULL) return 0;
+    
+    // Parses the path to find the directory
+    dirEntry* targetDir = parsePath(pathname);
+    if (targetDir == NULL) return 0;
+    
+    // Frees the loaded directory if it's not root
+    if (targetDir != rootDir) {
+        free(targetDir);
+    }
+    
+    return 1; // If parsePath succeeded, it's a directory
+}
+
 } 
