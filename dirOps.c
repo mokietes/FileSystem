@@ -225,4 +225,13 @@ int fs_isFile(char* filename) {
     
     // Finds the file in the parent directory
     dirEntry* entry = findDirEntry(parentDir, name);
+    
+    // Frees the loaded directory if it's not root
+    if (parentDir != rootDir) {
+        free(parentDir);
+    }
+    
+    return (entry != NULL && !entry->isDir) ? 1 : 0;
+}
+
 } 
