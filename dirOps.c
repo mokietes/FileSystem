@@ -270,4 +270,20 @@ int fs_mkdir(const char* pathname, mode_t mode) {
         dirName = lastSlash + 1;
     }
     
+    // Loads parent directory
+    dirEntry* parentDir = parsePath(parentPath);
+    if (parentDir == NULL) {
+        free(pathCopy);
+        return -1; // Parent directory not found
+    }
+    
+    // Checks if directory already exists
+    if (findDirEntry(parentDir, dirName) != NULL) {
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(pathCopy);
+        return -1; // Directory already exists
+    }
+    
 } 
