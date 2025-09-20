@@ -307,4 +307,15 @@ int fs_mkdir(const char* pathname, mode_t mode) {
         }
     }
     
+    if (emptySlot == -1) {
+        // No empty slots - need to expand directory
+        // This is a simplified implementation - in practice you'd need to handle directory expansion
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(newDir);
+        free(pathCopy);
+        return -1;
+    }
+    
 } 
