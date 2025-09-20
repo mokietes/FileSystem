@@ -249,4 +249,25 @@ int fs_isDir(char* pathname) {
     return 1; // If parsePath succeeded, it's a directory
 }
 
+int fs_mkdir(const char* pathname, mode_t mode) {
+    if (pathname == NULL) return -1;
+    
+    // Extracts parent directory path and new directory name
+    char* pathCopy = strdup(pathname);
+    char* lastSlash = strrchr(pathCopy, '/');
+    
+    char* parentPath = NULL;
+    char* dirName = NULL;
+    
+    if (lastSlash == NULL) {
+        // No slash - create in current directory
+        parentPath = strdup(".");
+        dirName = pathCopy;
+    } else {
+        // Splits path into parent and name
+        *lastSlash = '\0';
+        parentPath = pathCopy;
+        dirName = lastSlash + 1;
+    }
+    
 } 
