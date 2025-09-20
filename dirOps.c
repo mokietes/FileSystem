@@ -296,4 +296,15 @@ int fs_mkdir(const char* pathname, mode_t mode) {
         return -1;
     }
     
+    // Finds an empty slot in parent directory
+    int entries = parentDir[0].size / sizeof(dirEntry);
+    int emptySlot = -1;
+    
+    for (int i = 2; i < entries; i++) {
+        if (parentDir[i].name[0] == '\0') {
+            emptySlot = i;
+            break;
+        }
+    }
+    
 } 
