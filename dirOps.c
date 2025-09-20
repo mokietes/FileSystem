@@ -286,4 +286,14 @@ int fs_mkdir(const char* pathname, mode_t mode) {
         return -1; // Directory already exists
     }
     
+    // Creates new directory
+    dirEntry* newDir = createDir(DEFAULT_ENTRIES, parentDir);
+    if (newDir == NULL) {
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(pathCopy);
+        return -1;
+    }
+    
 } 
