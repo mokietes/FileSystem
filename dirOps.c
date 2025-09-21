@@ -318,4 +318,13 @@ int fs_mkdir(const char* pathname, mode_t mode) {
         return -1;
     }
     
+    // Adds the new directory entry to parent
+    strncpy(parentDir[emptySlot].name, dirName, MAX_NAME);
+    parentDir[emptySlot].name[MAX_NAME] = '\0';
+    parentDir[emptySlot].blockLoc = newDir[0].blockLoc;
+    parentDir[emptySlot].size = newDir[0].size;
+    parentDir[emptySlot].isDir = 1;
+    parentDir[emptySlot].createTime = time(NULL);
+    parentDir[emptySlot].modifyTime = parentDir[emptySlot].createTime;
+    parentDir[emptySlot].accessTime = parentDir[emptySlot].createTime;
 } 
