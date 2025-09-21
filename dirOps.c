@@ -327,4 +327,19 @@ int fs_mkdir(const char* pathname, mode_t mode) {
     parentDir[emptySlot].createTime = time(NULL);
     parentDir[emptySlot].modifyTime = parentDir[emptySlot].createTime;
     parentDir[emptySlot].accessTime = parentDir[emptySlot].createTime;
+    
+    // Saves parent directory
+    if (parentDir == rootDir) {
+        saveRootDir();
+    } else {
+        int parentSize = (parentDir[0].size + vcb->blockSize - 1) / vcb->blockSize;
+        saveDirectory(parentDir, parentDir[0].blockLoc, parentSize);
+        free(parentDir);
+    }
+    
+    free(newDir);
+    free(pathCopy);
+    
+    return 0;
+}
 } 
