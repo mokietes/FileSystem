@@ -342,4 +342,15 @@ int fs_mkdir(const char* pathname, mode_t mode) {
     
     return 0;
 }
+
+int fs_rmdir(const char* pathname) {
+    if (pathname == NULL) return -1;
+    
+    // Extracts parent directory path and directory name
+    char* pathCopy = strdup(pathname);
+    char* lastSlash = strrchr(pathCopy, '/');
+    
+    char* parentPath = NULL;
+    char* dirName = NULL;
+    
 } 
