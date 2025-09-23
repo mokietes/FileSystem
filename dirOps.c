@@ -390,4 +390,15 @@ int fs_rmdir(const char* pathname) {
         return -1;
     }
     
+    // Checks if directory is empty (only . and .. entries)
+    int entries = targetDir[0].size / sizeof(dirEntry);
+    int isEmpty = 1;
+    
+    for (int i = 2; i < entries; i++) {
+        if (targetDir[i].name[0] != '\0') {
+            isEmpty = 0;
+            break;
+        }
+    }
+    
 } 
