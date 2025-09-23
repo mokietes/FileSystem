@@ -353,4 +353,19 @@ int fs_rmdir(const char* pathname) {
     char* parentPath = NULL;
     char* dirName = NULL;
     
+    if (lastSlash == NULL) {
+        parentPath = strdup(".");
+        dirName = pathCopy;
+    } else {
+        *lastSlash = '\0';
+        parentPath = pathCopy;
+        dirName = lastSlash + 1;
+    }
+    
+    // Loads parent directory
+    dirEntry* parentDir = parsePath(parentPath);
+    if (parentDir == NULL) {
+        free(pathCopy);
+        return -1;
+    }
 } 
