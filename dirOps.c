@@ -379,4 +379,15 @@ int fs_rmdir(const char* pathname) {
         return -1; // Directory not found or not a directory
     }
     
+    // Loads the target directory to check if it's empty
+    int targetSize = (targetEntry->size + vcb->blockSize - 1) / vcb->blockSize;
+    dirEntry* targetDir = loadDirectory(targetEntry->blockLoc, targetSize);
+    if (targetDir == NULL) {
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(pathCopy);
+        return -1;
+    }
+    
 } 
