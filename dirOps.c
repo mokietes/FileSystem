@@ -401,4 +401,25 @@ int fs_rmdir(const char* pathname) {
         }
     }
     
+    if (!isEmpty) {
+        free(targetDir);
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(pathCopy);
+        return -1; // Directory not empty
+    }
+    
+    // Removes the directory entry from parent
+    int parentEntries = parentDir[0].size / sizeof(dirEntry);
+    for (int i = 2; i < parentEntries; i++) {
+        if (strcmp(parentDir[i].name, dirName) == 0) {
+            // Clear the entry
+            parentDir[i].name[0] = '\0';
+            parentDir[i].blockLoc = -1;
+            parentDir[i].isDir = 0;
+            parentDir[i].size = 0;
+            break;
+        }
+    }
 } 
