@@ -435,4 +435,10 @@ int fs_rmdir(const char* pathname) {
         free(parentDir);
     }
     
+    free(targetDir);
+    free(pathCopy);
+    
+    return 0;
+}
+
 } 
