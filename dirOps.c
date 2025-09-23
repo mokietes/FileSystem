@@ -368,4 +368,15 @@ int fs_rmdir(const char* pathname) {
         free(pathCopy);
         return -1;
     }
+    
+    // Finds the directory to remove
+    dirEntry* targetEntry = findDirEntry(parentDir, dirName);
+    if (targetEntry == NULL || !targetEntry->isDir) {
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(pathCopy);
+        return -1; // Directory not found or not a directory
+    }
+    
 } 
