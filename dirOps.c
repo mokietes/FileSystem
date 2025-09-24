@@ -467,4 +467,14 @@ int fs_delete(char* filename) {
         return -1;
     }
     
+    // Finds the file to delete
+    dirEntry* targetEntry = findDirEntry(parentDir, fileName);
+    if (targetEntry == NULL || targetEntry->isDir) {
+        if (parentDir != rootDir) {
+            free(parentDir);
+        }
+        free(pathCopy);
+        return -1; // File not found or is a directory
+    }
+    
 } 
