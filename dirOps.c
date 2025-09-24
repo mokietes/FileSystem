@@ -477,4 +477,20 @@ int fs_delete(char* filename) {
         return -1; // File not found or is a directory
     }
     
+    // Calculates file size in blocks
+    int fileBlocks = (targetEntry->size + vcb->blockSize - 1) / vcb->blockSize;
+    
+    // Removes the file entry from parent directory
+    int parentEntries = parentDir[0].size / sizeof(dirEntry);
+    for (int i = 2; i < parentEntries; i++) {
+        if (strcmp(parentDir[i].name, fileName) == 0) {
+            // Clear the entry
+            parentDir[i].name[0] = '\0';
+            parentDir[i].blockLoc = -1;
+            parentDir[i].isDir = 0;
+            parentDir[i].size = 0;
+            break;
+        }
+    }
+    
 } 
