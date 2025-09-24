@@ -460,4 +460,11 @@ int fs_delete(char* filename) {
         fileName = lastSlash + 1;
     }
     
+    // Loads parent directory
+    dirEntry* parentDir = parsePath(parentPath);
+    if (parentDir == NULL) {
+        free(pathCopy);
+        return -1;
+    }
+    
 } 
