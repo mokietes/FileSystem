@@ -441,4 +441,23 @@ int fs_rmdir(const char* pathname) {
     return 0;
 }
 
+int fs_delete(char* filename) {
+    if (filename == NULL) return -1;
+    
+    // Extracts parent directory path and filename
+    char* pathCopy = strdup(filename);
+    char* lastSlash = strrchr(pathCopy, '/');
+    
+    char* parentPath = NULL;
+    char* fileName = NULL;
+    
+    if (lastSlash == NULL) {
+        parentPath = strdup(".");
+        fileName = pathCopy;
+    } else {
+        *lastSlash = '\0';
+        parentPath = pathCopy;
+        fileName = lastSlash + 1;
+    }
+    
 } 
