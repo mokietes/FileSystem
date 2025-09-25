@@ -505,4 +505,7 @@ int fs_delete(char* filename) {
         free(parentDir);
     }
     
+    free(pathCopy);
+    
+    return 0;
 } 
