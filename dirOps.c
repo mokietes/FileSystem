@@ -493,4 +493,16 @@ int fs_delete(char* filename) {
         }
     }
     
+    // Frees the file blocks
+    freeBlocks(targetEntry->blockLoc, fileBlocks);
+    
+    // Saves parent directory
+    if (parentDir == rootDir) {
+        saveRootDir();
+    } else {
+        int parentSize = (parentDir[0].size + vcb->blockSize - 1) / vcb->blockSize;
+        saveDirectory(parentDir, parentDir[0].blockLoc, parentSize);
+        free(parentDir);
+    }
+    
 } 
