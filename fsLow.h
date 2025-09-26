@@ -45,3 +45,20 @@
 //		blockSize will be filled with the block size
 #ifndef uint64_t
 typedef u_int64_t uint64_t;
+#endif
+#ifndef uint32_t
+typedef u_int32_t uint32_t;
+#endif
+typedef unsigned long long ull_t;
+
+
+
+int startPartitionSystem (char * filename, uint64_t * volSize, uint64_t * blockSize);
+
+int closePartitionSystem ();
+
+int initFileSystem (uint64_t numberOfBlocks, uint64_t blockSize);
+void exitFileSystem ();
+
+uint64_t LBAwrite (void * buffer, uint64_t lbaCount, uint64_t lbaPosition);
+
