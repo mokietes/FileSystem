@@ -28,3 +28,20 @@
 *	file that represents the physical drive is properally closed.
 *
 **************************************************************/
+//
+// Start Partition System
+//
+// This is the first function to call before your filesystem starts
+// If the filename already exists, then the input values stored in 
+// volSize and blockSize are ignored.  If the file does not exist, it will 
+// be created to the specified volume size in units of the block size
+// (must be power of 2) plus one for the partition header.
+//
+// On return 
+// 		return value 0 = success;
+//		return value -1 = file exists but can not open for write
+//		return value -2 = insufficient space for the volume		
+//		volSize will be filled with the volume size
+//		blockSize will be filled with the block size
+#ifndef uint64_t
+typedef u_int64_t uint64_t;
