@@ -66,3 +66,16 @@ uint64_t LBAread (void * buffer, uint64_t lbaCount, uint64_t lbaPosition);
 
 void runFSLowTest();  //Do not use this, for testing only
 
+#define MINBLOCKSIZE 512
+#define PART_SIGNATURE	0x526F626572742042
+#define PART_SIGNATURE2	0x4220747265626F52
+#define PART_CAPTION "CSC-415 - Operating Systems File System Partition Header\n\n"
+
+#define	PART_ACTIVE 		1
+#define	PART_INACTIVE 		0
+
+#define	PART_NOERROR 		0
+#define PART_ERR_INVALID	-4
+
+
+
