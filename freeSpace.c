@@ -37,3 +37,8 @@ int initFreeSpace(int numberOfBlocks, int blockSize) {
         return -1;
     }
 
+    // Marking the VCB as used
+    if (setBit(VCB_START) == -1) {
+        return -1;
+    }
+
