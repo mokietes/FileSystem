@@ -42,3 +42,10 @@ int initFreeSpace(int numberOfBlocks, int blockSize) {
         return -1;
     }
 
+    // Marking the bitmap's own occupied blocks as used
+    for (int i = 0; i < bitmapBlocks; i++) {
+        if (setBit(BITMAP_START + i) == -1) {
+            return -1;
+        }
+    }
+
