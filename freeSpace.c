@@ -23,3 +23,17 @@
 #include "fsLow.h"
 #include "bitmap.h"
 #include "vcb.h"
+
+char *freeSpaceMap;
+
+int initFreeSpace(int numberOfBlocks, int blockSize) {
+    // Using a bitmap for free space management
+    // So each block in the volume is represented with 1 bit in the bitmap
+    int bitmapBytes = (numberOfBlocks + BYTE_BITS - 1) / BYTE_BITS;
+    int bitmapBlocks = (bitmapBytes + blockSize - 1) / blockSize;
+
+    freeSpaceMap = malloc(bitmapBlocks * blockSize);
+    if (freeSpaceMap == NULL) {
+        return -1;
+    }
+
