@@ -49,3 +49,13 @@ int initFreeSpace(int numberOfBlocks, int blockSize) {
         }
     }
 
+    // Write initial bitmap to disk
+    LBAwrite(freeSpaceMap, bitmapBlocks, BITMAP_START);
+
+    vcb->bitmapStart = BITMAP_START;
+    vcb->bitmapBlocks = bitmapBlocks;
+    vcb->firstBlockLocation = BITMAP_START + bitmapBlocks;
+    vcb->totalFreeSpace = numberOfBlocks - bitmapBlocks - 1;
+    return 0;
+}
+
