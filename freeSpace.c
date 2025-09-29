@@ -116,3 +116,18 @@ int allocBlocks(int numBlocks) {
                     setBit(j);
                 }
 
+                int bitmapBlocks = vcb->bitmapBlocks;
+                LBAwrite(freeSpaceMap, bitmapBlocks, BITMAP_START);
+                
+                vcb->totalFreeSpace -= numBlocks;
+                return startBlock;
+            }
+        } else {
+            contigBlocks = 0;
+            startBlock = -1;
+        }
+    }
+
+    return -1;
+}
+
