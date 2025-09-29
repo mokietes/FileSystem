@@ -59,3 +59,9 @@ int initFreeSpace(int numberOfBlocks, int blockSize) {
     return 0;
 }
 
+int loadFreeSpace() {
+    if (vcb == NULL) {
+        printf("VCB not initialized, cannot load free space map\n");
+        return -1;
+    }
+
