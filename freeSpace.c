@@ -97,3 +97,22 @@ int allocBlocks(int numBlocks) {
     int firstBlock = vcb->firstBlockLocation;
     int totalBlocks = vcb->totalBlocks;
 
+    for (int i = firstBlock; i < totalBlocks; i++) {
+        int byteIndex = i / BYTE_BITS;
+        int bitOffset = i % BYTE_BITS;
+        
+        // checks if the bit representing the current block is unused (0)
+        int currentBit = (freeSpaceMap[byteIndex] >> bitOffset) & 1;
+
+        if (currentBit == 0) {
+            if (contigBlocks == 0) {
+                startBlock = i;
+            }
+            contigBlocks++;
+
+            if (contigBlocks == numBlocks) {
+                // marks all allocated blocks as used
+                for (int j = startBlock; j < startBlock + numBlocks; j++) {
+                    setBit(j);
+                }
+
