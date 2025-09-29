@@ -65,3 +65,22 @@ int loadFreeSpace() {
         return -1;
     }
 
+    int bitmapStart = vcb->bitmapStart;
+    int bitmapBlocks = vcb->bitmapBlocks;
+    int blockSize = vcb->blockSize;
+
+    freeSpaceMap = malloc(bitmapBlocks * blockSize);
+    if (freeSpaceMap == NULL) {
+        return -1;
+    }
+
+    if (LBAread(freeSpaceMap, bitmapBlocks, bitmapStart) != bitmapBlocks) {
+        free(freeSpaceMap);
+        freeSpaceMap = NULL;
+        return -1;
+    }
+
+    printf("Free space map loaded successfully from block %d\n", bitmapStart);
+
+    return 0;
+}
