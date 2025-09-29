@@ -84,3 +84,16 @@ int loadFreeSpace() {
 
     return 0;
 }
+
+int allocBlocks(int numBlocks) {
+    if (numBlocks > vcb->totalFreeSpace) {
+        return -1;
+    }
+
+    // counters to find contiguous number of blocks equal to numBlocks
+    int contigBlocks = 0;
+    int startBlock = -1;
+
+    int firstBlock = vcb->firstBlockLocation;
+    int totalBlocks = vcb->totalBlocks;
+
