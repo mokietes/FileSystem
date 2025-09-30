@@ -131,3 +131,17 @@ int allocBlocks(int numBlocks) {
     return -1;
 }
 
+int releaseBlocks(int blockLoc, int numBlocks) {
+    if (numBlocks > vcb->totalFreeSpace) {
+        return -1;
+    }
+
+    for (int i = blockLoc; i < blockLoc + numBlocks; i++) {
+        clearBit(i);
+    }
+
+    int bitmapBlocks = vcb->bitmapBlocks;
+    LBAwrite(freeSpaceMap, bitmapBlocks, BITMAP_START);
+
+    return 0;
+}
