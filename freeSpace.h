@@ -13,3 +13,10 @@
 *
 **************************************************************/
 
+#ifndef FREE_SPACE_H
+#define FREE_SPACE_H
+
+#define BYTE_BITS 8
+#define VCB_START 0
+#define BITMAP_START 1
+
