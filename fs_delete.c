@@ -40,3 +40,21 @@ int fs_delete(char* filename) {
     // Check if it is the root
     if (ppi.index == -2) return -1; 
 
+    // Check if last element of the path is a file
+    if (fs_isFile(pathCopy) != 1) {
+        safeFree(ppi.parent);
+        ppi.parent = NULL;
+        return -1;
+    }
+
+    int blockSize = vcb->blockSize;
+    int fileLoc = ppi.parent[ppi.index].blockLoc;
+
+    // temporary fix for removing empty files of size 0
+    // because files are initially allocated with 1 block in b_open w/ create flag
+
+    if (ppi.parent[ppi.index].size == 0) {
+        ppi.parent[ppi.index].size = 1;
+        //printf("fs_delete file size: %d\n", ppi.parent[ppi.index].size);
+    }
+
