@@ -58,3 +58,17 @@ int fs_delete(char* filename) {
         //printf("fs_delete file size: %d\n", ppi.parent[ppi.index].size);
     }
 
+    int fileBlocks = (ppi.parent[ppi.index].size + blockSize - 1) / blockSize;
+    //printf("fs_delete file blocks: %d\n", fileBlocks);
+
+    releaseBlocks(fileLoc, fileBlocks);
+
+    // Mark the directory entry as unused
+    ppi.parent[ppi.index].name[0] = '\0';
+    saveDir(ppi.parent);
+
+    safeFree(ppi.parent);
+    ppi.parent = NULL;
+
+    return 0;
+}
