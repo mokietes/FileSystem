@@ -20,3 +20,11 @@
 #define VCB_START 0
 #define BITMAP_START 1
 
+extern char *freeSpaceMap;
+
+int initFreeSpace(int numberOfBlocks, int blockSize);
+int loadFreeSpace();
+int allocBlocks(int numBlocks);
+int releaseBlocks(int blockLoc, int numbBlocks);
+
+#endif
