@@ -20,3 +20,17 @@
 #include "parsePath.h"
 #include "vcb.h"
 
+int fs_stat(const char *path, struct fs_stat *buf) {
+    ppInfo ppi;
+    int ppRet;
+
+    char *pathCopy = strdup(path);
+    if (pathCopy == NULL) return -1;
+
+    ppRet = parsePath(pathCopy, &ppi);
+
+    // Check if path is valid
+    if (ppRet != 0) return -1;
+
+    // Check if last element of the path doesn't exist in the parent
+    if (ppi.index == -1) return -1;
