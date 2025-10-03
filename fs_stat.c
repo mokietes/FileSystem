@@ -34,3 +34,20 @@ int fs_stat(const char *path, struct fs_stat *buf) {
 
     // Check if last element of the path doesn't exist in the parent
     if (ppi.index == -1) return -1;
+
+    // Check if caller is asking for root stats
+    if (ppi.index == -2) {
+        buf->st_size = rootDir->size;
+        buf->st_accesstime = rootDir->accessTime;
+        buf->st_modtime = rootDir->modifyTime;
+        buf->st_createtime = rootDir->createTime;
+
+    // Otherwise get stats from index into parent
+    } else {
+        buf->st_size = ppi.parent[ppi.index].size;
+        buf->st_accesstime = ppi.parent[ppi.index].accessTime;
+        buf->st_modtime = ppi.parent[ppi.index].modifyTime;
+        buf-> st_createtime = ppi.parent[ppi.index].createTime;
+
+    }
+
