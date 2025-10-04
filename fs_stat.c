@@ -51,3 +51,11 @@ int fs_stat(const char *path, struct fs_stat *buf) {
 
     }
 
+    buf->st_blksize = vcb->blockSize;
+    buf->st_blocks = (buf->st_size + buf->st_blksize - 1) / buf->st_blksize;
+
+    safeFree(ppi.parent);
+    ppi.parent = NULL;
+
+    return 0;
+}
