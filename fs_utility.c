@@ -23,3 +23,21 @@ fdDir *fs_opendir(const char *pathname)
         return NULL;
     }
 
+    dirEntry *dirBlock = NULL;
+
+    if (info.index == -2) {
+        dirBlock = rootDir;
+    } else if (info.index != -1 && isDirEntryDir(&info.parent[info.index])) {
+        dirBlock = loadDir(&info.parent[info.index]);
+    }
+
+    if (!dirBlock) return NULL;
+
+    fdDir *newfdDir = malloc(sizeof(fdDir));
+    newfdDir->d_reclen = dirBlock[0].size;
+    newfdDir->dirEntryPosition = 0;
+    newfdDir->directory = dirBlock;
+
+    return newfdDir;
+}
+
