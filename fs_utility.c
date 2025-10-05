@@ -41,3 +41,25 @@ fdDir *fs_opendir(const char *pathname)
     return newfdDir;
 }
 
+
+/*
+ * Reads one valid entry from an opened directory.
+ * Returns a pointer to static fs_diriteminfo, or NULL if done.
+ */
+struct fs_diriteminfo *fs_readdir(fdDir *dirp)
+{
+    if (dirp == NULL) {
+        return NULL;
+    }
+
+    struct fs_diriteminfo *di = malloc(sizeof(struct fs_diriteminfo));
+
+    int entryCount = dirp->directory[0].size / sizeof(dirEntry);
+
+    while (dirp->dirEntryPosition < entryCount) {
+        // Skip unused entries
+        if (dirp->directory[dirp->dirEntryPosition].name[0] == '\0') {
+            dirp->dirEntryPosition++;
+            continue;
+        }
+
