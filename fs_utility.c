@@ -13,3 +13,13 @@
  * Loads the directory block from disk and prepares for iteration.
  * Returns a directory handle (fdDir pointer), or NULL on error.
  */
+fdDir *fs_opendir(const char *pathname)
+{
+    if (!pathname) return NULL;
+
+    ppInfo info;
+    char *pathCopy = strdup(pathname);
+    if (parsePath(pathCopy, &info) != 0) {
+        return NULL;
+    }
+
