@@ -63,3 +63,17 @@ struct fs_diriteminfo *fs_readdir(fdDir *dirp)
             continue;
         }
 
+        di->d_reclen = (unsigned short) sizeof(struct fs_diriteminfo);
+        di->fileType = (unsigned char) dirp->directory[dirp->dirEntryPosition].isDir ?
+            FT_DIRECTORY : FT_REGFILE;
+        strcpy(di->d_name, dirp->directory[dirp->dirEntryPosition].name);
+        di->d_name[255] = '\0';
+
+        dirp->dirEntryPosition++;
+
+        return di;
+    }
+
+    return NULL;
+}
+
