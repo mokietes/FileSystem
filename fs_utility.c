@@ -98,3 +98,16 @@ int fs_closedir(fdDir *dirp) {
  * Returns NULL on error, or the buffer pointer on success.
  */
 
+
+char *fs_getcwd(char *buf, size_t size)
+{
+    if (!buf || size < 2) return NULL;
+
+    // Handle if current working directory is root
+    if (cwDir == rootDir || cwDir[0].blockLoc == rootDir[0].blockLoc) {
+        strncpy(buf, "/" ,size);
+        buf[size - 1] = '\0';  // Ensure null-termination
+
+        return buf;
+    }
+
