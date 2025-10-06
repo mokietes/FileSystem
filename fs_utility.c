@@ -92,3 +92,9 @@ int fs_closedir(fdDir *dirp) {
     return 0;
 }
 
+/*
+ * Returns a pointer to the current working directory path.
+ * If `buf` is valid and `size` allows, the path is copied to it.
+ * Returns NULL on error, or the buffer pointer on success.
+ */
+
