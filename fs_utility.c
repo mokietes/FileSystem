@@ -77,3 +77,18 @@ struct fs_diriteminfo *fs_readdir(fdDir *dirp)
     return NULL;
 }
 
+/*
+ * Closes an open directory stream.
+ * Frees the internal structure and loaded directory if needed.
+ */
+int fs_closedir(fdDir *dirp) {
+
+    if (dirp == NULL) {
+        printf("Cannot close because directory is null\n");
+        return 0;
+    }
+
+    free(dirp);
+    return 0;
+}
+
