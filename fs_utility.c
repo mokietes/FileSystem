@@ -188,3 +188,21 @@ char *fs_getcwd(char *buf, size_t size)
     return buf;
 }
 
+/*
+* returns 0 on success
+* returns -1 on error
+*/
+
+int fs_setcwd(char *pathname) {
+    if (pathname == NULL) {
+        return -1;
+    }
+
+    ppInfo ppi;
+    int ppRet = parsePath(pathname, &ppi);
+
+    // Check if path is valid
+    if (ppRet != 0) {
+        return -1;
+    }
+
