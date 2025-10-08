@@ -127,3 +127,17 @@ char *fs_getcwd(char *buf, size_t size)
             break;
         }
 
+        if (current[1].isDir != 1) {
+            return NULL;
+        }
+
+        dirEntry *parent = loadDir(&current[1]);
+        if (parent == NULL) {
+
+            return NULL;
+        }
+
+        int found = 0;
+
+        int entries = parent[0].size / sizeof(dirEntry);
+        
