@@ -141,3 +141,13 @@ char *fs_getcwd(char *buf, size_t size)
 
         int entries = parent[0].size / sizeof(dirEntry);
         
+        for (int i = 2; i < entries; i++) {
+            if (parent[i].name[0] == '\0') continue;
+
+            if (parent[i].blockLoc == current[0].blockLoc) {
+                size_t len = strlen(parent[i].name);
+                if (tempPos + len + 2 > sizeof(tempPath)) {
+                    safeFree(parent);
+                    return NULL;
+                }
+
