@@ -166,3 +166,25 @@ char *fs_getcwd(char *buf, size_t size)
                 break;
             }
         }
+
+        safeFree(current);
+        current = parent;
+
+        if (found == 0) {
+            return NULL;
+        }
+
+        loopCounter++;
+    }
+
+    if (tempPos + 1 >= size) {
+        return NULL;
+    }
+
+    buf[0] = '/';
+    strncpy(buf + 1, tempPath, size - 2);
+    buf[size - 1] = '\0';
+
+    return buf;
+}
+
