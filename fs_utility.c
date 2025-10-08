@@ -151,3 +151,18 @@ char *fs_getcwd(char *buf, size_t size)
                     return NULL;
                 }
 
+                // Shift existing path to the right
+                if (tempPos > 0) {
+                    memmove(tempPath + len + 1, tempPath, tempPos + 1);
+                    tempPath[len] = '/';
+                // otherwise null terminate the existing path
+                } else {
+                    tempPath[len] = '\0';
+                }
+
+                memcpy(tempPath, parent[i].name, len);
+                tempPos += len + (tempPos > 0 ? 1 : 0);
+                found = 1;
+                break;
+            }
+        }
