@@ -111,3 +111,19 @@ char *fs_getcwd(char *buf, size_t size)
         return buf;
     }
 
+    dirEntry *current = cwDir;
+    char tempPath[DIRMAX_LEN] = "";
+    int tempPos = 0;
+    int loopCounter = 0;
+
+    while (current != NULL) {
+
+        if (current == rootDir || current[0].blockLoc == rootDir[0].blockLoc) {
+            if (tempPos == 0) {
+                tempPath[0] = '/';
+                tempPath[1] = '\0';
+                tempPos = 1;
+            } 
+            break;
+        }
+
