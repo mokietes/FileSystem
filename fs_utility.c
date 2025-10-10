@@ -206,3 +206,12 @@ int fs_setcwd(char *pathname) {
         return -1;
     }
 
+    // Handle root directory case
+    if (ppi.index == -2) {
+        if (cwDir != rootDir) {
+            safeFree(cwDir);
+            cwDir = rootDir;
+        }
+        safeFree(ppi.parent);
+        return 0;
+    }
