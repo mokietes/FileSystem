@@ -215,3 +215,23 @@ int fs_setcwd(char *pathname) {
         safeFree(ppi.parent);
         return 0;
     }
+
+    // Check if last element exists
+    if (ppi.index == -1) {
+        safeFree(ppi.parent);
+        return -1;
+    }
+
+    // Verify it's a directory
+    if (fs_isDir(pathname) != 1) {
+        safeFree(ppi.parent);
+        return -1;
+    }
+
+    // Load the new directory
+    dirEntry *newDir = loadDir(&ppi.parent[ppi.index]);
+    if (newDir == NULL) {
+        safeFree(ppi.parent);
+        return -1;
+    }
+
