@@ -257,3 +257,15 @@ int fs_isFile(char *filename)
     return (info.parent[info.index].isDir == 0);
 }
 
+/*
+ * Returns 1 if the given path resolves to a directory.
+ * Returns 0 if path is invalid, not found, or not a directory.
+ */
+int fs_isDir(char *pathname)
+{
+    ppInfo info;
+    if (parsePath(pathname, &info) != 0 || info.index == -1 || !info.parent)
+        return 0;
+
+    return (info.parent[info.index].isDir == 1);
+}
