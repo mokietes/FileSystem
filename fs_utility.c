@@ -235,3 +235,16 @@ int fs_setcwd(char *pathname) {
         return -1;
     }
 
+    // Update current working directory
+    safeFree(cwDir);
+    cwDir = newDir;
+
+    safeFree(ppi.parent);
+    return 0;
+}
+
+
+/*
+ * Returns 1 if the given path resolves to a regular file.
+ * Returns 0 if path is invalid, not found, or is a directory.
+ */
