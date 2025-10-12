@@ -248,3 +248,12 @@ int fs_setcwd(char *pathname) {
  * Returns 1 if the given path resolves to a regular file.
  * Returns 0 if path is invalid, not found, or is a directory.
  */
+int fs_isFile(char *filename)
+{
+    ppInfo info;
+    if (parsePath(filename, &info) != 0 || info.index == -1 || !info.parent)
+        return 0;
+
+    return (info.parent[info.index].isDir == 0);
+}
+
