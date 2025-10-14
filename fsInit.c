@@ -41,3 +41,11 @@ int initFileSystem (uint64_t numberOfBlocks, uint64_t blockSize)
 		return 1;
 	}
 
+	// LBAread blocks 0 into VCB pointer through a buffer
+	char *buffer = malloc(blockSize);
+	if (LBAread(buffer, 1, 0) != 1) {
+		free(vcb);
+		vcb = NULL;
+		return 1;
+	}
+
