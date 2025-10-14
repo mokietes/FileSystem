@@ -28,3 +28,16 @@
 
 #define SIGNATURE 1123581321345589144
 
+VCB *vcb = NULL;
+
+int initFileSystem (uint64_t numberOfBlocks, uint64_t blockSize)
+	{
+	printf ("Initializing File System with %ld blocks with a block size of %ld\n", numberOfBlocks, blockSize);
+	/* ADD any code you need to initialize your file system. */
+
+	// allocates a block of memory for global VCB pointer
+	vcb = malloc(sizeof(VCB));
+	if (vcb == NULL) {
+		return 1;
+	}
+
