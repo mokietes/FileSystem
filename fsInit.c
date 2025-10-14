@@ -14,3 +14,17 @@
 *
 **************************************************************/
 
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "fsLow.h"
+#include "mfs.h"
+#include "vcb.h"
+#include "freeSpace.h"
+#include "dirEntry.h"
+
+#define SIGNATURE 1123581321345589144
+
