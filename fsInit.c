@@ -49,3 +49,25 @@ int initFileSystem (uint64_t numberOfBlocks, uint64_t blockSize)
 		return 1;
 	}
 
+	memcpy(vcb, buffer, sizeof(VCB));
+	free(buffer);
+	buffer = NULL;
+
+	// determines using the signature if the volume needs to be formatted or not
+	if (vcb->signature != SIGNATURE) {
+		printf("Formatting new filesystem...\n");
+		initVCB(numberOfBlocks, blockSize, SIGNATURE);
+		writeVCB();
+		printf("Filesystem formatting complete.\n");
+	} else {
+		printf("Loading existing filesystem...\n");
+		// loads free space map from disk
+		if (loadFreeSpace() == -1) {
+			return 1;
+		}
+		// loads root directory from disk
+		loadRootDir();
+	}
+
+	return 0;
+	}
