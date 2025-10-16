@@ -93,3 +93,10 @@ void exitFileSystem ()
 		freeSpaceMap = NULL;
 	}
 		
+	if (vcb != NULL) {
+		free(vcb);
+		vcb = NULL;
+	}
+
+	printf ("System exiting\n");
+	}
