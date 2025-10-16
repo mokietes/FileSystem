@@ -71,3 +71,25 @@ int initFileSystem (uint64_t numberOfBlocks, uint64_t blockSize)
 
 	return 0;
 	}
+		
+		
+void exitFileSystem ()
+	{
+
+	// saves root directory to disk
+	saveRootDir();
+		
+	// writes VCB to disk
+	writeVCB();
+		
+	// frees allocated memory
+	if (rootDir != NULL) {
+		free(rootDir);
+		rootDir = NULL;
+	}
+
+	if (freeSpaceMap != NULL) {
+		free(freeSpaceMap);
+		freeSpaceMap = NULL;
+	}
+		
