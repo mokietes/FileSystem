@@ -57,3 +57,17 @@ typedef struct dispatch_t
 	} dispatch_t, * dispatch_p;
 
 
+int cmd_ls (int argcnt, char *argvec[]);
+int cmd_cp (int argcnt, char *argvec[]);
+int cmd_mv (int argcnt, char *argvec[]);
+int cmd_md (int argcnt, char *argvec[]);
+int cmd_rm (int argcnt, char *argvec[]);
+int cmd_touch (int argcnt, char *argvec[]);
+int cmd_cat (int argcnt, char *argvec[]);
+int cmd_cp2l (int argcnt, char *argvec[]);
+int cmd_cp2fs (int argcnt, char *argvec[]);
+int cmd_cd (int argcnt, char *argvec[]);
+int cmd_pwd (int argcnt, char *argvec[]);
+int cmd_history (int argcnt, char *argvec[]);
+int cmd_help (int argcnt, char *argvec[]);
+
