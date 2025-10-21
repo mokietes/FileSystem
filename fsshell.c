@@ -87,3 +87,20 @@ dispatch_t dispatchTable[] = {
 	{"help", cmd_help, "Prints out help"}
 };
 
+static int dispatchcount = sizeof (dispatchTable) / sizeof (dispatch_t);
+
+// Display files for use by ls command
+int displayFiles (fdDir * dirp, int flall, int fllong)
+	{
+#if (CMDLS_ON == 1)				
+	if (dirp == NULL)	//get out if error
+		return (-1);
+	
+	struct fs_diriteminfo * di;
+	struct fs_stat statbuf;
+	
+	di = fs_readdir (dirp);
+	printf("\n");
+	while (di != NULL) 
+		{
+		if ((di->d_name[0] != '.') || (flall)) //if not all and starts with '.' it is hidden
