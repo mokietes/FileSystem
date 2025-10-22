@@ -122,3 +122,16 @@ int displayFiles (fdDir * dirp, int flall, int fllong)
 	return 0;
 	}
 	
+
+/****************************************************
+*  ls commmand
+****************************************************/
+int cmd_ls (int argcnt, char *argvec[])
+	{
+#if (CMDLS_ON == 1)				
+	int option_index;
+	int c;
+	int fllong;
+	int flall;
+	char cwd[DIRMAX_LEN];
+		
