@@ -158,3 +158,39 @@ int cmd_ls (int argcnt, char *argvec[])
     // initialized before each parsing loop.
     optind = 1;
 #endif
+	fllong = 0;
+	flall = 0;
+
+	while (1)
+		{	
+		c = getopt_long(argcnt, argvec, "alh",
+				long_options, &option_index);
+				
+		if (c == -1)
+		   break;
+
+		switch (c) {
+			case 0:			//flag was set, ignore
+			   printf("Unknown option %s", long_options[option_index].name);
+			   if (optarg)
+				   printf(" with arg %s", optarg);
+			   printf("\n");
+				break;
+				
+			case 'a':
+				flall = 1;
+				break;
+				
+			case 'l':
+				fllong = 1;
+				break;
+				
+			case 'h':
+			default:
+				printf ("Usage: ls [--all-a] [--long/-l] [pathname]\n");
+				return (-1);
+				break;
+			}
+		}
+	
+	
