@@ -135,3 +135,26 @@ int cmd_ls (int argcnt, char *argvec[])
 	int flall;
 	char cwd[DIRMAX_LEN];
 		
+	static struct option long_options[] = 
+		{
+		/* These options set their assigned flags to value and return 0 */
+		/* These options don't set flags and return the value */	 
+		{"long",	no_argument, 0, 'l'},  
+		{"all",		no_argument, 0, 'a'},
+		{"help",	no_argument, 0, 'h'},
+		{0,			0,       0,  0 }
+		};
+		
+	option_index = 0;
+#ifdef __GNU_LIBRARY__
+    // WORKAROUND
+    // Setting "optind" to 0 triggers initialization of getopt private
+    // structure (holds pointers on data between calls). This helps
+    // to avoid possible memory violation, because data passed to getopt_long()
+    // could be freed between parse() calls.
+    optind = 0;
+#else
+    // "optind" is used between getopt() calls to get next argument for parsing and should be
+    // initialized before each parsing loop.
+    optind = 1;
+#endif
