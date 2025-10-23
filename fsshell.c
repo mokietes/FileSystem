@@ -194,3 +194,27 @@ int cmd_ls (int argcnt, char *argvec[])
 		}
 	
 	
+	if (optind < argcnt)
+		{
+		//processing arguments after options
+		for (int k = optind; k < argcnt; k++)
+			{
+			if (fs_isDir(argvec[k]))
+				{
+				fdDir * dirp;
+				dirp = fs_opendir (argvec[k]);
+				displayFiles (dirp, flall, fllong);
+				}
+			else // it is just a file ?
+				{
+				if (fs_isFile (argvec[k]))
+					{
+					//no support for long format here
+					printf ("%s\n", argvec[k]);
+					}
+				else
+					{
+					printf ("%s is not found\n", argvec[k]);
+					}
+				}
+			}		
