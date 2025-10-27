@@ -28,3 +28,9 @@ typedef struct VCB {
     int totalFreeSpace;     // number of free blocks
 } VCB;
 
+extern VCB *vcb;
+
+void initVCB(int numberOfBlocks, int blockSize, long signature);
+void writeVCB();
+
+#endif
