@@ -16,3 +16,15 @@
 #ifndef VCB_H
 #define VCB_H
 
+typedef struct VCB {
+    long signature;         // identifier for the VCB
+    int totalBlocks;        // number of blocks in volume
+    int blockSize;          // size of a block
+    int bitmapStart;        // tracks where bitmap begins
+    int bitmapBlocks;       // blocks the bitmap occupies
+    int rootLocation;       // location of the root directory
+    int rootSize;           // size of root directory in block numbers
+    int firstBlockLocation; // location of the first block
+    int totalFreeSpace;     // number of free blocks
+} VCB;
+
