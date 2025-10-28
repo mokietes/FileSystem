@@ -15,3 +15,20 @@
  *  copyright 2020 Robert Bierman
  ****************************************************************************/
 
+// Compilation:	gcc hexdump.c -o hexdump
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <getopt.h>
+
+#ifndef uint64_t
+typedef u_int64_t uint64_t;
+#endif
+#ifndef uint32_t
+typedef u_int32_t uint32_t;
+#endif
+
