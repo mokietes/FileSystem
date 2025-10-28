@@ -32,3 +32,17 @@ typedef u_int64_t uint64_t;
 typedef u_int32_t uint32_t;
 #endif
 
+
+#define BUFSIZE 4096		//amount read at one time
+#define BLOCKSIZE 256		// number of bytes printed before a blank line
+#define LBABLOCKSIZE	512	// display blocks from command line are based on 512 bytes
+#define VERSION "1.0"		// Version
+
+// This procedure takes a file name, a starting block and a number of blocks and dumps the
+// file to stdout.  
+// Output (including the number of blocks) is limited by the length of the file and
+// partial blocks are counted as a whole block for the header showing how many blocks are
+// being displayed.
+//
+// Checks are done to ensure that blanks are displayed on the last line of the output
+// if the file only partially uses the last 16 bytes.
