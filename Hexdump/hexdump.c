@@ -62,3 +62,14 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 	numBytesToProcess = numBlocks * lbaBlockSize;
 	numBytesToStartBlock = startBlock * lbaBlockSize;
 	
+	int fd = open (filename, O_RDONLY);			//open the file
+	
+	// Error opening file (common if they don't enter a valid file name)
+	if (fd == -1)
+		{
+		printf ("ERROR: failed to open file '%s'\n", filename);
+		return -2;
+		}
+		
+	endOfFile = lseek(fd, 0, SEEK_END);  //will reset seek below
+	
