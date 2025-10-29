@@ -46,3 +46,19 @@ typedef u_int32_t uint32_t;
 //
 // Checks are done to ensure that blanks are displayed on the last line of the output
 // if the file only partially uses the last 16 bytes.
+
+int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
+	{
+	int readbytes;
+	int position = 0;
+	int loops = BUFSIZE / BLOCKSIZE;	//number of loops of blocks within one buffer read
+	int offset;
+	int k;
+	uint32_t lbaBlockSize = LBABLOCKSIZE;
+	uint64_t numBytesToStartBlock;
+	uint64_t numBytesToProcess;
+	uint64_t endOfFile;
+
+	numBytesToProcess = numBlocks * lbaBlockSize;
+	numBytesToStartBlock = startBlock * lbaBlockSize;
+	
