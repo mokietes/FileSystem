@@ -15,3 +15,16 @@
 *
 **************************************************************/
 
+#define _XOPEN_SOURCE 500
+
+#ifndef _MFS_H
+#define _MFS_H
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <time.h>
+#include <dirent.h>
+
+#include "b_io.h"
+#include "dirEntry.h"
+
