@@ -231,3 +231,25 @@ int cmd_ls (int argcnt, char *argvec[])
 	return 0;
 	}
 
+
+	
+/****************************************************
+*  Touch file commmand
+****************************************************/
+
+int cmd_touch (int argcnt, char *argvec[])
+        {
+#if (CMDTOUCH_ON == 1)     
+        int testfs_src_fd;
+        char * src;
+
+        switch (argcnt)
+                {
+                case 2: //only one name provided
+                        src = argvec[1];
+                        break;
+
+                default:
+                        printf("Usage: touch srcfile\n");
+                        return (-1);
+                }
