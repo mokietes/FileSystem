@@ -253,3 +253,15 @@ int cmd_touch (int argcnt, char *argvec[])
                         printf("Usage: touch srcfile\n");
                         return (-1);
                 }
+
+
+        testfs_src_fd = b_open (src, O_WRONLY | O_CREAT);
+        if (testfs_src_fd < 0)
+	    return (testfs_src_fd);	//return with error
+
+        b_close (testfs_src_fd);
+#endif
+        return 0;
+        }
+
+
