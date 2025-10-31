@@ -73,3 +73,13 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 		
 	endOfFile = lseek(fd, 0, SEEK_END);  //will reset seek below
 	
+	if (numBytesToProcess == 0)
+		{
+		numBytesToProcess = endOfFile;
+		//reset numBlocks for the header here
+		numBlocks = ((numBytesToProcess + lbaBlockSize) - 1) / lbaBlockSize;
+		numBlocks = numBlocks - startBlock;
+		}
+
+	unsigned char * buf = malloc (BUFSIZE);		//Allocate the read buffer
+	
