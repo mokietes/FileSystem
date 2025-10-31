@@ -83,3 +83,15 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 
 	unsigned char * buf = malloc (BUFSIZE);		//Allocate the read buffer
 	
+	// Very rare error - something bad if I can not allocate a small buffer
+	if (buf == NULL)
+		{
+		close (fd);
+		printf ("Failed to allocate buffer\n");
+		return -3;
+		}
+	
+	//Position to the startBlock
+	lseek (fd, numBytesToStartBlock, SEEK_SET);
+	position = numBytesToStartBlock;
+	
