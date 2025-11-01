@@ -95,3 +95,15 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 	lseek (fd, numBytesToStartBlock, SEEK_SET);
 	position = numBytesToStartBlock;
 	
+	if (position > endOfFile)		//can not start past the end of the filename
+		{
+		printf ("Can not dump file %s, starting at block %llu, past the end of the file.\n\n", 
+			filename, (unsigned long long)startBlock);	
+		return (-5);
+		}
+
+	// calculate max blocks we can display from the given start point
+	uint64_t maxBlocks = (((endOfFile - position) + lbaBlockSize) - 1) / lbaBlockSize;
+	if (numBlocks > maxBlocks)
+		numBlocks = maxBlocks;
+
