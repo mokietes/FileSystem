@@ -107,3 +107,15 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 	if (numBlocks > maxBlocks)
 		numBlocks = maxBlocks;
 
+	
+	//Proces the file - the do loop goes until we read less bytes than the BUFSIZE
+	printf ("Dumping file %s, starting at block %llu for %llu block%c:\n\n", 
+		filename, (unsigned long long)startBlock, (unsigned long long)numBlocks, numBlocks != 1?'s':'\0');	
+	do
+		{
+		if (position >= (numBytesToStartBlock + numBytesToProcess))
+			goto cleanup;
+			
+		readbytes = read (fd, buf, BUFSIZE);		//Read one block
+		offset = 0;									//set our offset within the block
+		for (int i = 0; i < loops; i++)				//Loop for each "Block" within one buffer read
