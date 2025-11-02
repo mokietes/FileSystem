@@ -119,3 +119,21 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 		readbytes = read (fd, buf, BUFSIZE);		//Read one block
 		offset = 0;									//set our offset within the block
 		for (int i = 0; i < loops; i++)				//Loop for each "Block" within one buffer read
+			{
+			for (int j = 0; j < BLOCKSIZE/16; j++)	//loop j lines for each block
+				{
+				if (position+offset >= (numBytesToStartBlock + numBytesToProcess))
+					goto cleanup;
+				
+				// Handle if we are at the end of the file and the line will have less 
+				// than 16 bytes associated with it.
+				if (offset + 16 > readbytes)
+					{
+					printf ("%06X: ", offset+position);
+					for (k = 0; k < readbytes - offset; k++)
+						{
+						printf ("%02X ", buf[offset + k]);
+						}
+					for (;k < 16; k++)	
+						{
+						printf ("   ");   //Print remaining of the hex output as blanks to fill out the line
