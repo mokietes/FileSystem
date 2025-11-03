@@ -137,3 +137,15 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 					for (;k < 16; k++)	
 						{
 						printf ("   ");   //Print remaining of the hex output as blanks to fill out the line
+						}
+					printf (" | ");
+					
+					for (k = 0; k < readbytes - offset; k++)
+						{
+						printf ("%c", buf[offset + k] < 32?'.':buf[offset+k]);
+						}
+					printf("\n");
+					
+					}
+				else	
+					{
