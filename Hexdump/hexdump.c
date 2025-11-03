@@ -149,3 +149,26 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 					}
 				else	
 					{
+					//If a full line, do one print for the full line
+					printf ("%06X: %02X %02X %02X %02X %02X %02X %02X %02X  %02X %02X %02X %02X %02X %02X %02X %02X | %c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",
+						offset+position,
+						buf[offset + 0],buf[offset + 1],buf[offset + 2],buf[offset + 3],
+						buf[offset + 4],buf[offset + 5],buf[offset + 6],buf[offset + 7],
+						buf[offset + 8],buf[offset + 9],buf[offset + 10],buf[offset + 11],
+						buf[offset + 12],buf[offset + 13],buf[offset + 14],buf[offset + 15],
+						buf[offset + 0] < 32?'.':buf[offset + 0],
+						buf[offset + 1] < 32?'.':buf[offset + 1],
+						buf[offset + 2] < 32?'.':buf[offset + 2],
+						buf[offset + 3] < 32?'.':buf[offset + 3],
+						buf[offset + 4] < 32?'.':buf[offset + 4],
+						buf[offset + 5] < 32?'.':buf[offset + 5],
+						buf[offset + 6] < 32?'.':buf[offset + 6],
+						buf[offset + 7] < 32?'.':buf[offset + 7],
+						buf[offset + 8] < 32?'.':buf[offset + 8],
+						buf[offset + 9] < 32?'.':buf[offset + 9],
+						buf[offset + 10] < 32?'.':buf[offset + 10],
+						buf[offset + 11] < 32?'.':buf[offset + 11],
+						buf[offset + 12] < 32?'.':buf[offset + 12],
+						buf[offset + 13] < 32?'.':buf[offset + 13],
+						buf[offset + 14] < 32?'.':buf[offset + 14],
+						buf[offset + 15] < 32?'.':buf[offset + 15]);
