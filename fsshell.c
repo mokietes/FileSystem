@@ -288,3 +288,24 @@ int cmd_cat (int argcnt, char *argvec[])
                         return (-1);
                 }
 
+
+        testfs_src_fd = b_open (src, O_RDONLY);
+
+        if (testfs_src_fd < 0)
+            {
+	    printf ("Failed to open file system file: %s\n", src);
+            return (testfs_src_fd);
+            }
+
+
+        do 
+                {
+                readcnt = b_read (testfs_src_fd, buf, BUFFERLEN-1);
+                buf[readcnt] = '\0';
+                printf("%s", buf);
+                } while (readcnt == BUFFERLEN-1);
+        b_close (testfs_src_fd);
+#endif
+        return 0;
+        }
+
