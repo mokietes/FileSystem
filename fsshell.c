@@ -265,3 +265,26 @@ int cmd_touch (int argcnt, char *argvec[])
         }
 
 
+/***************************************************
+* Cat Command
+***************************************************/
+
+int cmd_cat (int argcnt, char *argvec[])
+        {
+#if (CMDCAT_ON == 1)     
+        int testfs_src_fd;
+        char * src;
+        int readcnt;
+        char buf[BUFFERLEN];
+
+        switch (argcnt)
+                {
+                case 2: //only one name provided
+                        src = argvec[1];
+                        break;
+
+                default:
+                        printf("Usage: cat srcfile\n");
+                        return (-1);
+                }
+
