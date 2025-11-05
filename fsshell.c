@@ -333,3 +333,26 @@ int cmd_cp (int argcnt, char *argvec[])
 			dest = src;
 			break;
 			
+		case 3:
+			src = argvec[1];
+			dest = argvec[2];
+			break;
+		
+		default:
+			printf("Usage: cp srcfile [destfile]\n");
+			return (-1);
+		}
+	
+	
+	testfs_src_fd = b_open (src, O_RDONLY);
+	testfs_dest_fd = b_open (dest, O_WRONLY | O_CREAT | O_TRUNC);
+	do 
+		{
+		readcnt = b_read (testfs_src_fd, buf, BUFFERLEN);
+		b_write (testfs_dest_fd, buf, readcnt);
+		} while (readcnt == BUFFERLEN);
+	b_close (testfs_src_fd);
+	b_close (testfs_dest_fd);
+#endif
+	return 0;
+	}
