@@ -309,3 +309,27 @@ int cmd_cat (int argcnt, char *argvec[])
         return 0;
         }
 
+
+
+
+/****************************************************
+*  Copy file commmand
+****************************************************/
+	
+int cmd_cp (int argcnt, char *argvec[])
+	{
+#if (CMDCP_ON == 1)	
+	int testfs_src_fd;
+	int testfs_dest_fd;
+	char * src;
+	char * dest;
+	int readcnt;
+	char buf[BUFFERLEN];
+	
+	switch (argcnt)
+		{
+		case 2:	//only one name provided
+			src = argvec[1];
+			dest = src;
+			break;
+			
