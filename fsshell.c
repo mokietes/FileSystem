@@ -356,3 +356,29 @@ int cmd_cp (int argcnt, char *argvec[])
 #endif
 	return 0;
 	}
+/****************************************************
+*  Remove directory or file commmand
+****************************************************/
+int cmd_rm (int argcnt, char *argvec[])
+	{
+#if (CMDRM_ON == 1)
+	if (argcnt != 2)
+		{
+		printf ("Usage: rm path\n");
+		return -1;
+		}
+		
+	char * path = argvec[1];	
+	
+	//must determine if file or directory
+	if (fs_isDir (path))
+		{
+		return (fs_rmdir (path));
+		}		
+	if (fs_isFile (path))
+		{
+		return (fs_delete(path));
+		}	
+		
+	printf("The path %s is neither a file not a directory\n", path);
+#endif
