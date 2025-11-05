@@ -28,3 +28,15 @@
 #include "b_io.h"
 #include "dirEntry.h"
 
+#include <dirent.h>
+#define FT_REGFILE	DT_REG
+#define FT_DIRECTORY DT_DIR
+#define FT_LINK	DT_LNK
+
+#ifndef uint64_t
+typedef u_int64_t uint64_t;
+#endif
+#ifndef uint32_t
+typedef u_int32_t uint32_t;
+#endif
+
