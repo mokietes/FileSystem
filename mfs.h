@@ -84,3 +84,20 @@ int fs_isDir(char * pathname);		//return 1 if directory, 0 otherwise
 int fs_delete(char* filename);	//removes a file
 
 
+// This is the strucutre that is filled in from a call to fs_stat
+struct fs_stat
+{
+	off_t     st_size;    		/* total size, in bytes */
+	blksize_t st_blksize; 		/* blocksize for file system I/O */
+	blkcnt_t  st_blocks;  		/* number of 512B blocks allocated */
+	time_t    st_accesstime;   	/* time of last access */
+	time_t    st_modtime;   	/* time of last modification */
+	time_t    st_createtime;   	/* time of last status change */
+	
+	/* add additional attributes here for your file system */
+};
+
+int fs_stat(const char *path, struct fs_stat *buf);
+
+#endif
+
