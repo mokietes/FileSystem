@@ -67,3 +67,12 @@ typedef struct fdDir
 	struct fs_diriteminfo * di;		/* Pointer to the structure you return from read */
 	} fdDir;
 
+// Key directory functions
+int fs_mkdir(const char *pathname, mode_t mode);
+int fs_rmdir(const char *pathname);
+
+// Directory iteration functions
+fdDir * fs_opendir(const char *pathname);
+struct fs_diriteminfo *fs_readdir(fdDir *dirp);
+int fs_closedir(fdDir *dirp);
+
