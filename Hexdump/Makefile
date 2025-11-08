@@ -1,0 +1,10 @@
+ROOTNAME=hexdump
+HW=
+FOPTION=
+RUNOPTIONS=
+CC=gcc
+CFLAGS= -g -I.
+LIBS =pthread
+DEPS = 
+OBJ = $(ROOTNAME)$(HW)$(FOPTION).o
+
