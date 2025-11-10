@@ -25,3 +25,10 @@ typedef struct ppInfo {
     char *lastElement; // name of the last element in the pathname, NULL if root
 } ppInfo;
 
+// returns 0 for valid, -1 for invalid
+int parsePath(char *pathname, ppInfo *ppi);
+
+// returns index of a directory entry name within the directory de
+// returns -1 if not found
+int findInDir(dirEntry *de, char *name);
+
