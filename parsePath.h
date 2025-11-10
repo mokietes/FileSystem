@@ -19,3 +19,9 @@
 
 #include "dirEntry.h"
 
+typedef struct ppInfo {
+    dirEntry *parent;  // parent directory of the pathname's dirEntry
+    int index;         // index into parent, -1 if it doesnt exist, -2 if it is root
+    char *lastElement; // name of the last element in the pathname, NULL if root
+} ppInfo;
+
