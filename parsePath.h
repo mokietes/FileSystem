@@ -39,3 +39,4 @@ int isDirEntryDir(dirEntry *de);
 // loads the directory from disk
 dirEntry * loadDir(dirEntry *de);
 
+#endif
