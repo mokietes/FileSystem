@@ -356,6 +356,20 @@ int cmd_cp (int argcnt, char *argvec[])
 #endif
 	return 0;
 	}
+	
+/****************************************************
+*  Move file commmand
+****************************************************/
+int cmd_mv (int argcnt, char *argvec[])
+{
+#if (CMDMV_ON == 1)	
+	int testfs_src_fd;
+	int testfs_dest_fd;
+	char * src;
+	char * dest;
+	int readcnt;
+	char buf[BUFFERLEN];
+
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
