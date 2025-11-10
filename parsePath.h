@@ -32,3 +32,10 @@ int parsePath(char *pathname, ppInfo *ppi);
 // returns -1 if not found
 int findInDir(dirEntry *de, char *name);
 
+// Checks if passed in directory entry is a directory
+// returns 1 if it is a directory, 0 otherwise
+int isDirEntryDir(dirEntry *de);
+
+// loads the directory from disk
+dirEntry * loadDir(dirEntry *de);
+
