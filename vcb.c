@@ -38,3 +38,6 @@ void initVCB(int numberOfBlocks, int blockSize, long signature) {
     // calculates the first available block after root directory
     vcb->firstBlockLocation = vcb->rootLocation + vcb->rootSize;
     
+void writeVCB() {
+    LBAwrite(vcb, 1, 0);
+}
