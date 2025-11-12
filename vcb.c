@@ -21,3 +21,14 @@
 #include "freeSpace.h"
 #include "dirEntry.h"
 
+void initVCB(int numberOfBlocks, int blockSize, long signature) {
+    vcb->totalBlocks = numberOfBlocks;
+    vcb->blockSize = blockSize;
+    vcb->signature = signature;
+
+    // initializes the free space management
+    if (initFreeSpace(numberOfBlocks, blockSize) != 0) {
+        printf("Failed to initialize free space management\n");
+        return;
+    }
+
