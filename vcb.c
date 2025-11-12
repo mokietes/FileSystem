@@ -32,3 +32,9 @@ void initVCB(int numberOfBlocks, int blockSize, long signature) {
         return;
     }
 
+    // initializes the root directory
+    initRootDir();
+
+    // calculates the first available block after root directory
+    vcb->firstBlockLocation = vcb->rootLocation + vcb->rootSize;
+    
