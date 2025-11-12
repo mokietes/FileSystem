@@ -38,6 +38,13 @@ void initVCB(int numberOfBlocks, int blockSize, long signature) {
     // calculates the first available block after root directory
     vcb->firstBlockLocation = vcb->rootLocation + vcb->rootSize;
     
+    printf("VCB initialized: %d blocks, %d bytes per block\n", 
+           numberOfBlocks, blockSize);
+    printf("Root directory at block %d, size %d blocks\n", 
+           vcb->rootLocation, vcb->rootSize);
+    printf("First available block: %d\n", vcb->firstBlockLocation);
+}
+
 void writeVCB() {
     LBAwrite(vcb, 1, 0);
 }
