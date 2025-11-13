@@ -25,3 +25,10 @@
 #include "vcb.h"
 #include "fsLow.h"
 
+int parsePath(char *pathname, ppInfo *ppi) {
+    dirEntry *startParent; // The starting parent directory, either root or cwd
+    dirEntry *parent;
+    char *savePtr;
+    char *token1;
+    char *token2;
+
