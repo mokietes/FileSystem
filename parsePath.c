@@ -46,3 +46,20 @@ int parsePath(char *pathname, ppInfo *ppi) {
         startParent = cwDir;
     }
 
+    parent = startParent;
+    
+    token1 = strtok_r(pathname, "/", &savePtr);
+
+    if (token1 == NULL) {
+        // Handle special case if the pathname is just the root directory
+        if (pathname[0] ==  '/') {
+            ppi->parent = parent;
+            ppi->index = -2; // Used to indicate that it is the root itself
+            ppi->lastElement = NULL; // No last element for root
+            return 0;
+        } else {
+            // Otherwise the pathname is invalid
+            return -1;
+        }
+    }
+
