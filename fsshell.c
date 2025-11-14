@@ -370,6 +370,14 @@ int cmd_mv (int argcnt, char *argvec[])
 	int readcnt;
 	char buf[BUFFERLEN];
 
+	switch (argcnt)
+	{
+		case 2:	//only one name provided
+			src = argvec[1];
+			dest = src;
+			break;
+
+		case 3:
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
