@@ -32,3 +32,17 @@ int parsePath(char *pathname, ppInfo *ppi) {
     char *token1;
     char *token2;
 
+    // Handle if passed in pathname is NULL
+    if (pathname == NULL) return -1;
+
+    char pathCopy[strlen(pathname) + 1];
+    strcpy(pathCopy, pathname);
+
+    // If pathname is an absolute path, set starting parent to the root
+    if (pathCopy[0] == '/') {
+        startParent = rootDir;
+    } else {
+        // If pathname is relative, set starting parent to current working directory
+        startParent = cwDir;
+    }
+
