@@ -390,6 +390,21 @@ int cmd_mv (int argcnt, char *argvec[])
 
 				static char fullDest[DIRMAX_LEN];
 				strcpy(fullDest, raw_dest);
+
+				// Add trailing slash if missing
+				int len = strlen(fullDest);
+				if (fullDest[len - 1] != '/') {
+					fullDest[len] = '/';
+					fullDest[len + 1] = '\0';
+				}
+
+				strcat(fullDest, base);
+				dest = fullDest;
+			} else {
+				dest = raw_dest;
+			}
+			break;
+		}
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
