@@ -405,6 +405,13 @@ int cmd_mv (int argcnt, char *argvec[])
 			}
 			break;
 		}
+		
+		default:
+			printf("Usage: mv srcfile [destfile]\n");
+			return (-1);
+	}
+
+	testfs_src_fd = b_open(src, O_RDONLY);
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
