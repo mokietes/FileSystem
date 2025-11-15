@@ -378,6 +378,18 @@ int cmd_mv (int argcnt, char *argvec[])
 			break;
 
 		case 3:
+		{
+			src = argvec[1];
+			char *raw_dest = argvec[2];
+
+			// Check if destination is a directory
+			if (fs_isDir(raw_dest)) {
+				// Extract basename from source path
+				char *base = strrchr(src, '/');
+				base = (base == NULL) ? src : base + 1;
+
+				static char fullDest[DIRMAX_LEN];
+				strcpy(fullDest, raw_dest);
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
