@@ -412,6 +412,12 @@ int cmd_mv (int argcnt, char *argvec[])
 	}
 
 	testfs_src_fd = b_open(src, O_RDONLY);
+	if (testfs_src_fd < 0)
+	{
+		printf("Error: could not open source file '%s'\n", src);
+		return -1;
+	}
+
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
