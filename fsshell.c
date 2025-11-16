@@ -418,6 +418,13 @@ int cmd_mv (int argcnt, char *argvec[])
 		return -1;
 	}
 
+	testfs_dest_fd = b_open(dest, O_WRONLY | O_CREAT | O_TRUNC);
+	if (testfs_dest_fd < 0)
+	{
+		printf("Error: could not create destination file '%s'\n", dest);
+		b_close(testfs_src_fd);
+		return -1;
+	}
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
