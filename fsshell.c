@@ -425,6 +425,18 @@ int cmd_mv (int argcnt, char *argvec[])
 		b_close(testfs_src_fd);
 		return -1;
 	}
+
+	do 
+	{
+		readcnt = b_read(testfs_src_fd, buf, BUFFERLEN);
+		b_write(testfs_dest_fd, buf, readcnt);
+	} while (readcnt == BUFFERLEN);
+
+	b_close(testfs_src_fd);
+	b_close(testfs_dest_fd);
+
+	// Now delete the source file
+	int del_result = fs_delete(argvec[1]);
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
