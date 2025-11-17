@@ -437,6 +437,16 @@ int cmd_mv (int argcnt, char *argvec[])
 
 	// Now delete the source file
 	int del_result = fs_delete(argvec[1]);
+    if (del_result != 0) {
+        printf("mv warning: copy succeeded but failed to delete '%s'\n", argvec[1]);
+        return -1;
+    }
+
+#endif
+	return 0;
+}
+
+
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
