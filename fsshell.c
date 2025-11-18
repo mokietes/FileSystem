@@ -447,6 +447,28 @@ int cmd_mv (int argcnt, char *argvec[])
 }
 
 
+
+
+/****************************************************
+*  Make Directory commmand
+****************************************************/
+// Make Directory	
+int cmd_md (int argcnt, char *argvec[])
+	{
+#if (CMDMD_ON == 1)				
+	if (argcnt != 2)
+		{
+		printf("Usage: md pathname\n");
+		return -1;
+		}
+	else
+		{
+		return(fs_mkdir(argvec[1], 0777));
+		}
+#endif
+	return -1;
+	}
+	
 /****************************************************
 *  Remove directory or file commmand
 ****************************************************/
