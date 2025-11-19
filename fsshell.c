@@ -495,3 +495,18 @@ int cmd_rm (int argcnt, char *argvec[])
 		
 	printf("The path %s is neither a file not a directory\n", path);
 #endif
+	return -1;
+	}
+	
+/****************************************************
+*  Help commmand
+****************************************************/
+int cmd_help (int argcnt, char *argvec[])
+	{
+	for (int i = 0; i < dispatchcount; i++)
+		{
+		printf ("%s\t%s\n", dispatchTable[i].command, dispatchTable[i].description);
+		}
+	return 0;
+	} 
+
