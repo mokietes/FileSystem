@@ -518,6 +518,16 @@ int cmd_cp2l (int argcnt, char *argvec[])
 			dest = src;
 			break;
 			
+		case 3:
+			src = argvec[1];
+			dest = argvec[2];
+			break;
+		
+		default:
+			printf("Usage: cp2l srcfile [Linuxdestfile]\n");
+			return (-1);
+		}
+	
 /****************************************************
 *  Help commmand
 ****************************************************/
