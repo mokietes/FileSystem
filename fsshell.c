@@ -499,6 +499,26 @@ int cmd_rm (int argcnt, char *argvec[])
 	}
 	
 /****************************************************
+*  Copy file from test file system to Linux commmand
+****************************************************/
+int cmd_cp2l (int argcnt, char *argvec[])
+	{
+#if (CMDCP2L_ON == 1)				
+	int testfs_fd;
+	int linux_fd;
+	char * src;
+	char * dest;
+	int readcnt;
+	char buf[BUFFERLEN];
+	
+	switch (argcnt)
+		{
+		case 2:	//only one name provided
+			src = argvec[1];
+			dest = src;
+			break;
+			
+/****************************************************
 *  Help commmand
 ****************************************************/
 int cmd_help (int argcnt, char *argvec[])
