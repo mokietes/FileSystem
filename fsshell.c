@@ -543,6 +543,19 @@ int cmd_cp2l (int argcnt, char *argvec[])
 	}
 	
 /****************************************************
+*  Copy file from Linux to test file system commmand
+****************************************************/
+int cmd_cp2fs (int argcnt, char *argvec[])
+	{
+#if (CMDCP2FS_ON == 1)				
+	int testfs_fd;
+	int linux_fd;
+	char * src;
+	char * dest;
+	int readcnt;
+	char buf[BUFFERLEN];
+	
+/****************************************************
 *  Help commmand
 ****************************************************/
 int cmd_help (int argcnt, char *argvec[])
