@@ -555,6 +555,18 @@ int cmd_cp2fs (int argcnt, char *argvec[])
 	int readcnt;
 	char buf[BUFFERLEN];
 	
+	switch (argcnt)
+		{
+		case 2:	//only one name provided
+			src = argvec[1];
+			dest = src;
+			break;
+			
+		case 3:
+			src = argvec[1];
+			dest = argvec[2];
+			break;
+		
 /****************************************************
 *  Help commmand
 ****************************************************/
