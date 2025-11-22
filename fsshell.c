@@ -567,6 +567,25 @@ int cmd_cp2fs (int argcnt, char *argvec[])
 			dest = argvec[2];
 			break;
 		
+		default:
+			printf("Usage: cp2fs Linuxsrcfile [destfile]\n");
+			return (-1);
+		}
+	
+	
+	testfs_fd = b_open (dest, O_WRONLY | O_CREAT | O_TRUNC);
+	linux_fd = open (src, O_RDONLY);
+	do 
+		{
+		readcnt = read (linux_fd, buf, BUFFERLEN);
+		b_write (testfs_fd, buf, readcnt);
+		} while (readcnt == BUFFERLEN);
+	b_close (testfs_fd);
+	close (linux_fd);
+#endif
+	return 0;
+	}
+	
 /****************************************************
 *  Help commmand
 ****************************************************/
