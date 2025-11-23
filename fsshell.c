@@ -608,6 +608,16 @@ int cmd_cd (int argcnt, char *argvec[])
 			path[strlen(path) - 1] = 0;
 			}
 		}
+	int ret = fs_setcwd (path);
+	if (ret != 0)	//error
+		{
+		printf ("Could not change path to %s\n", path);
+		return (ret);
+		}			
+#endif
+	return 0;
+	}
+	
 /****************************************************
 *  Help commmand
 ****************************************************/
