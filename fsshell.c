@@ -587,6 +587,28 @@ int cmd_cp2fs (int argcnt, char *argvec[])
 	}
 	
 /****************************************************
+*  cd commmand
+****************************************************/
+int cmd_cd (int argcnt, char *argvec[])
+	{
+#if (CMDCD_ON == 1)	
+	if (argcnt != 2)
+		{
+		printf ("Usage: cd path\n");
+		return (-1);
+		}
+	char * path = argvec[1];	//argument
+	
+	if (path[0] == '"')
+		{
+		if (path[strlen(path)-1] == '"')
+			{
+			//remove quotes from string
+			path = path + 1;
+			path[strlen(path) - 1] = 0;
+			}
+		}
+/****************************************************
 *  Help commmand
 ****************************************************/
 int cmd_help (int argcnt, char *argvec[])
