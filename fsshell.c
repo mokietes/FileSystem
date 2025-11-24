@@ -632,6 +632,17 @@ int cmd_pwd (int argcnt, char *argvec[])
 		printf ("An error occurred while trying to get the current working directory\n");
 		}
 	else
+		{
+		printf ("%s\n", ptr);
+		}
+	free (dir_buf);
+	dir_buf = NULL;
+	ptr = NULL;
+	
+#endif
+	return 0;
+	}
+
 /****************************************************
 *  Help commmand
 ****************************************************/
