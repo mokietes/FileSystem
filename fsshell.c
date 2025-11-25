@@ -644,6 +644,14 @@ int cmd_pwd (int argcnt, char *argvec[])
 	}
 
 /****************************************************
+*  History commmand
+****************************************************/
+int cmd_history (int argcnt, char *argvec[])
+	{
+	HIST_ENTRY * he;
+	int i = 0;
+	
+/****************************************************
 *  Help commmand
 ****************************************************/
 int cmd_help (int argcnt, char *argvec[])
