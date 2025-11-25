@@ -651,6 +651,19 @@ int cmd_history (int argcnt, char *argvec[])
 	HIST_ENTRY * he;
 	int i = 0;
 	
+	
+	for (i = history_base; i <= history_length; i++)
+		{
+		he = history_get(i);
+		
+		if (he != NULL)
+			{
+			printf ("%s\n", he->line);
+			}
+		}
+	return 0;
+	}
+	
 /****************************************************
 *  Help commmand
 ****************************************************/
