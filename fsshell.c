@@ -676,3 +676,14 @@ int cmd_help (int argcnt, char *argvec[])
 	return 0;
 	} 
 
+void processcommand (char * cmd)
+	{
+	int cmdLen;
+	char ** cmdv;	//command vector
+	int cmdc;		//command count
+	int i, j;
+	
+	cmdLen = strlen(cmd);
+	cmdv = (char **) malloc (sizeof(char *) * ((cmdLen/2)+2));
+	cmdc = 0;
+	
