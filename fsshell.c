@@ -698,3 +698,12 @@ void processcommand (char * cmd)
 				cmd[i] = 0;	//NULL terminate prior string
 				while (cmd[i+1] == ' ')  // null at end will prevent from overshooting string
 					{
+					i++;
+					}
+				if ((i+1) < cmdLen)	//there is still more
+					{
+					cmdv[cmdc] = &cmd[i+1];
+					++cmdc;
+					}
+				break;
+				
