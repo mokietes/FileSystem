@@ -687,3 +687,14 @@ void processcommand (char * cmd)
 	cmdv = (char **) malloc (sizeof(char *) * ((cmdLen/2)+2));
 	cmdc = 0;
 	
+	cmdv[cmdc] = cmd;
+	++cmdc;
+	
+	for (i = 0; i < cmdLen; i++)
+		{
+		switch (cmd[i])
+			{
+			case ' ':
+				cmd[i] = 0;	//NULL terminate prior string
+				while (cmd[i+1] == ' ')  // null at end will prevent from overshooting string
+					{
