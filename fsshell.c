@@ -707,3 +707,8 @@ void processcommand (char * cmd)
 					}
 				break;
 				
+			case '\\':
+				++i;	//skip next character
+				break;
+				
+			case DOUBLE_QUOTE:	//ignore everything till next quote (unless unterminated)
