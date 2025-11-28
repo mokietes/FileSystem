@@ -78,3 +78,19 @@ int parsePath(char *pathname, ppInfo *ppi) {
             ppi->index = idx;
             ppi->lastElement = token1;
             return 0;
+        } else {
+            // token1 is not the last element of the pathname
+
+            // Check if token1 exists in the parent
+            if (idx ==  -1) return -1;
+        
+            // Check if token1 is a directory
+            if (!isDirEntryDir(&(parent[idx]))) return -1;
+
+
+            if (strcmp(token1, "..") == 0) {
+                if (parent == rootDir) {
+                    token1 = token2;
+                    continue;
+                }
+
