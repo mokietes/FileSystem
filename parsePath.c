@@ -94,3 +94,22 @@ int parsePath(char *pathname, ppInfo *ppi) {
                     continue;
                 }
 
+                dirEntry *tempDir = loadDir(&parent[idx]);
+                if (tempDir == NULL) {
+                    if (parent != startParent) free(parent);
+                    return -1;
+                }
+
+                if (parent != startParent) free(parent);
+                parent = tempDir;
+
+            } else {
+                dirEntry *tempDir = loadDir(&parent[idx]);
+                if (tempDir == NULL) {
+                    if (parent != startParent) free(parent);
+                    return -1;
+                }
+                if (parent != startParent) free(parent);
+                parent = tempDir;
+            }
+
