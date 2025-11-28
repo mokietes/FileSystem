@@ -113,6 +113,7 @@ int parsePath(char *pathname, ppInfo *ppi) {
                 parent = tempDir;
             }
 
+
             /*
 
             // If token1 is a directory, load the directory from disk
@@ -137,4 +138,13 @@ int parsePath(char *pathname, ppInfo *ppi) {
                     return -1;
                 }
             }
+
+            parent = tempDir;
+
+            */
+            token1 = token2;
+        }
+
+    }
+}
 
