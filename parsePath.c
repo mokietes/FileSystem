@@ -113,3 +113,28 @@ int parsePath(char *pathname, ppInfo *ppi) {
                 parent = tempDir;
             }
 
+            /*
+
+            // If token1 is a directory, load the directory from disk
+            // and set it as the parent, and token2 as the new token1
+            // This is for the next iteration to check if it is the last
+            // element in the pathname.
+            dirEntry *tempDir = loadDir(&parent[idx]);
+
+            if (strcmp(token1, "..") == 0) {
+                if (parent == rootDir) {
+                    tempDir = rootDir;
+                }
+            }
+        
+            // Make sure to not free root or cwd
+            if (tempDir != startParent) {
+                free(parent);
+
+                // Check if loadDirectory failed due to malloc/LBAread errors
+                if (tempDir == NULL) {
+                    parent = NULL;
+                    return -1;
+                }
+            }
+
