@@ -63,3 +63,18 @@ int parsePath(char *pathname, ppInfo *ppi) {
         }
     }
 
+    while (1) 
+    {
+
+        // Find token1's index into its parent directory
+        int idx = findInDir(parent, token1);
+        token2 = strtok_r(NULL, "/", &savePtr);
+
+        // Check if token1 is the last element of the pathname
+        // The loop exits and the function terminates once the last element
+        // is found, and the ppi struct is filled
+        if (token2 == NULL) {
+            ppi->parent = parent;
+            ppi->index = idx;
+            ppi->lastElement = token1;
+            return 0;
