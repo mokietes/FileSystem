@@ -148,3 +148,15 @@ int parsePath(char *pathname, ppInfo *ppi) {
     }
 }
 
+int findInDir(dirEntry *de, char *name) {
+    // Find number of entries within the passed in directory de
+    int numEntries = de[0].size / sizeof(dirEntry);
+
+    // Handle special directory entries
+    if (strcmp(name, ".") == 0) {
+        return 0;
+    }
+
+    if (strcmp(name, "..") == 0) {
+        return 1;
+    }
