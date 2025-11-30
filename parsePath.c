@@ -160,3 +160,15 @@ int findInDir(dirEntry *de, char *name) {
     if (strcmp(name, "..") == 0) {
         return 1;
     }
+
+    // Loop through de to find the matching directory entry name
+    for (int idx = 0; idx < numEntries; idx++) {
+        //printf("findInDir[%d]: %s\n", idx,  de[idx].name);
+        if (strcmp(de[idx].name, name) == 0) {
+            return idx;
+        }
+    }
+
+    return -1;
+}
+
