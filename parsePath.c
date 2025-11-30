@@ -172,3 +172,11 @@ int findInDir(dirEntry *de, char *name) {
     return -1;
 }
 
+int isDirEntryDir(dirEntry *de) {
+    if (de->isDir == 1) {
+        return 1;
+    }
+
+    return 0;
+}
+
