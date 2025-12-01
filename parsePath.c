@@ -191,3 +191,9 @@ dirEntry * loadDir(dirEntry *de) {
         return NULL;
     }
 
+    if (LBAread(buffer, blocksNeeded, blockLoc) != blocksNeeded) {
+        free(buffer);
+        buffer = NULL;
+        return NULL;
+    }
+
