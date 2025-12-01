@@ -180,3 +180,14 @@ int isDirEntryDir(dirEntry *de) {
     return 0;
 }
 
+dirEntry * loadDir(dirEntry *de) {
+    // Get the starting block and number of blocks for the directory entry
+    int blockLoc = de->blockLoc;
+    int blockSize = vcb->blockSize;
+    int blocksNeeded = (de->size + blockSize - 1) / blockSize;
+
+    char *buffer = malloc(blocksNeeded * blockSize);
+    if (buffer == NULL) {
+        return NULL;
+    }
+
