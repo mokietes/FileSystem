@@ -197,3 +197,10 @@ dirEntry * loadDir(dirEntry *de) {
         return NULL;
     }
 
+    dirEntry *newDe = malloc(de->size);
+    if (newDe == NULL) {
+        free(buffer);
+        buffer = NULL;
+        return NULL;
+    }
+
