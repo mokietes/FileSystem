@@ -204,3 +204,9 @@ dirEntry * loadDir(dirEntry *de) {
         return NULL;
     }
 
+    memcpy(newDe, buffer, de->size);
+    free(buffer);
+    buffer = NULL;
+
+    return newDe;
+}
