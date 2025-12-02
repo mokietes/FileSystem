@@ -734,3 +734,4 @@ void processcommand (char * cmd)
 				break;
 				
 			case SINGLE_QUOTE:
+	}
