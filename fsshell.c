@@ -712,3 +712,14 @@ void processcommand (char * cmd)
 				break;
 				
 			case DOUBLE_QUOTE:	//ignore everything till next quote (unless unterminated)
+				for (j = i+1; j < cmdLen; j++)
+					{
+					if (cmd[j] == '\\')
+						{
+						++j;	//skip next character
+						}	
+					else if (cmd[j] == DOUBLE_QUOTE)
+						{
+						break;
+						}
+					}
