@@ -172,6 +172,21 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 						buf[offset + 13] < 32?'.':buf[offset + 13],
 						buf[offset + 14] < 32?'.':buf[offset + 14],
 						buf[offset + 15] < 32?'.':buf[offset + 15]);
+					}
+				//up the offset by 16 for the next line	
+				offset = offset + 16;
+				
+				//if greater than the readbytes we have exhausted this buffer
+				if (offset >= readbytes)
+					break;
+					
+				}
+			//print a blank line between each BLOCK
+			printf("\n");
+			//if greater than the readbytes we have exhausted this buffer
+			if (offset >= readbytes)
+				break;
+			}
 int processArguments (int argc, char * argv[])
 	{
 	int c;
