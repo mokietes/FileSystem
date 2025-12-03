@@ -187,6 +187,20 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 			if (offset >= readbytes)
 				break;
 			}
+		//Next buffer, increment the overall position within the file.	
+		position = position + readbytes;
+		
+		// If we read the number of bytes requested (BUFSIZE), then we have not hit
+		// the end of file yet, and should try to read more.
+		} while (readbytes == BUFSIZE); 
+
+cleanup:	
+	// clean up	
+	free (buf);
+	close (fd);
+	return 0;
+	}
+
 int processArguments (int argc, char * argv[])
 	{
 	int c;
