@@ -172,6 +172,15 @@ int processFile (char * filename, uint64_t startBlock, uint64_t numBlocks)
 						buf[offset + 13] < 32?'.':buf[offset + 13],
 						buf[offset + 14] < 32?'.':buf[offset + 14],
 						buf[offset + 15] < 32?'.':buf[offset + 15]);
+int processArguments (int argc, char * argv[])
+	{
+	int c;
+	int digit_optind = 0;
+	uint64_t count, start;
+	count = 0; start = 0;
+	int retval;
+	char * filename = NULL;
+	
 
 //Main calls process arguments which in turn calls process file.
 
