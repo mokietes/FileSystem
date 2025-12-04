@@ -214,6 +214,19 @@ int processArguments (int argc, char * argv[])
 	int retval;
 	char * filename = NULL;
 	
+	while (1) 
+		{
+		int this_option_optind = optind ? optind : 1;
+		int option_index = 0;
+		
+		static struct option long_options[] = {
+		   {"count",	required_argument, 0, 'c'},  //forces to c
+		   {"start",	required_argument, 0, 's'},	 //forces to s
+		   {"help",		no_argument,       0, 'h'},
+		   {"version",	no_argument,       0, 'v'},
+		   {"file",		required_argument, 0, 'f'},
+		   {0,			0,                 0,  0 }
+		};
 
 //Main calls process arguments which in turn calls process file.
 
