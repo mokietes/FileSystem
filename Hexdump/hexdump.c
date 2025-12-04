@@ -201,6 +201,10 @@ cleanup:
 	return 0;
 	}
 
+// processArguments handles the command line using getopt_long to parse the argv array
+//
+// It then sets variable and or dispatches the action necessary based on the parameters.
+// it handles the multiple calls to processFile by iterating on uncontained parameters
 int processArguments (int argc, char * argv[])
 	{
 	int c;
