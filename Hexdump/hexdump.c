@@ -234,6 +234,26 @@ int processArguments (int argc, char * argv[])
 		if (c == -1)
 		   break;
 
+
+	//if a file name is already specified - process it
+	if (filename != NULL)
+		{
+		retval = processFile (filename, start, count);
+		if (retval != 0)
+			return (retval);	
+		}
+		
+	//additional files (same arguments)		
+	if (optind < argc) 
+		{
+        while (optind < argc)
+			{
+			retval = processFile (argv[optind++], start, count);	
+			if (retval != 0)
+				return (retval);	
+			}
+		}
+		
 //Main calls process arguments which in turn calls process file.
 
 int main (int argc, char * argv[])
