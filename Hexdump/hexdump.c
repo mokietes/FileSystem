@@ -228,6 +228,12 @@ int processArguments (int argc, char * argv[])
 		   {0,			0,                 0,  0 }
 		};
 
+		c = getopt_long(argc, argv, "c:s:f:vh",
+				long_options, &option_index);
+				
+		if (c == -1)
+		   break;
+
 //Main calls process arguments which in turn calls process file.
 
 int main (int argc, char * argv[])
