@@ -254,6 +254,10 @@ int processArguments (int argc, char * argv[])
 			}
 		}
 		
+	return 0;
+	}
+
+
 //Main calls process arguments which in turn calls process file.
 
 int main (int argc, char * argv[])
