@@ -234,6 +234,15 @@ int processArguments (int argc, char * argv[])
 		if (c == -1)
 		   break;
 
+		switch (c) {
+			case 0:			//It is a long option (all converted so should be none)
+			
+			   printf("Unknown option %s", long_options[option_index].name);
+			   if (optarg)
+				   printf(" with arg %s", optarg);
+			   printf("\n");
+			   exit (-1);
+
 
 	//if a file name is already specified - process it
 	if (filename != NULL)
