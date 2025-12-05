@@ -243,6 +243,18 @@ int processArguments (int argc, char * argv[])
 			   printf("\n");
 			   exit (-1);
 
+			case 'c':
+			   count = atol(optarg);
+			   break;
+
+			case 's':
+			   start = atol(optarg);
+			   break;
+
+			case 'f':
+			   filename = optarg;
+			   break;
+
 
 	//if a file name is already specified - process it
 	if (filename != NULL)
