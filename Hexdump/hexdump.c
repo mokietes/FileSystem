@@ -255,6 +255,14 @@ int processArguments (int argc, char * argv[])
 			   filename = optarg;
 			   break;
 
+			case 'h':
+				printf ("USAGE: hexdump --file <filename> [--count num512ByteBlocks] [--start start512ByteBlock] [--help] [--version]\n");
+			    exit (0);
+			   
+			case 'v':
+				printf("hexdump - Version %s; copyright 2020 Robert Bierman\n\n", VERSION);
+				exit (0);
+
 
 	//if a file name is already specified - process it
 	if (filename != NULL)
