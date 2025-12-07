@@ -263,6 +263,14 @@ int processArguments (int argc, char * argv[])
 				printf("hexdump - Version %s; copyright 2020 Robert Bierman\n\n", VERSION);
 				exit (0);
 
+			case '?':
+			   break;
+
+			default:
+			   printf("Unknown option returned character code 0%o ??\n", c);
+			   exit (-1);
+			}
+		}
 
 	//if a file name is already specified - process it
 	if (filename != NULL)
