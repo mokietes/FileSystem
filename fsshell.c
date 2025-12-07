@@ -734,4 +734,15 @@ void processcommand (char * cmd)
 				break;
 				
 			case SINGLE_QUOTE:
+				for (j = i+1; j < cmdLen; j++)
+					{
+					if (cmd[j] == '\\')
+						{
+						++j;	//skip next character
+						}	
+					else if (cmd[j] == SINGLE_QUOTE)
+						{
+						break;
+						}
+					}
 	}
