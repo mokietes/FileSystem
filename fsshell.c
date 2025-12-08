@@ -745,4 +745,18 @@ void processcommand (char * cmd)
 						break;
 						}
 					}
+				if (j >= cmdLen)
+					{
+					printf("Unterminated string\n");
+					free(cmdv);
+					cmdv = NULL;
+					return;
+					}
+				i=j;
+				break;
+			default:
+				break;
+			}
+		}
+		
 	}
