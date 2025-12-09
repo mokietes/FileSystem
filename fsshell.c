@@ -790,4 +790,9 @@ void processcommand (char * cmd)
 #if (CMDLS_ON == 1)
         printf ("| ls                   |    ON    |\n");
 #else
+#if (CMDPWD_ON == 1)
+        printf ("| pwd                  |    ON    |\n");  
+#else
+        printf ("| pwd                  |    OFF   |\n");  
+#endif
 	}
