@@ -767,4 +767,20 @@ void processcommand (char * cmd)
 #endif		
 	cmdv[cmdc] = 0;		//just be safe - null terminate array of arguments
 	
+	for (i = 0; i < dispatchcount; i++)
+		{
+		if (strcmp(dispatchTable[i].command, cmdv[0]) == 0)
+			{
+			dispatchTable[i].func(cmdc,cmdv);
+			free (cmdv);
+			cmdv = NULL;
+			return;
+			}
+		}
+	printf("%s is not a regonized command.\n", cmdv[0]);
+	cmd_help(cmdc, cmdv);	
+	free (cmdv);
+	cmdv = NULL;
+	}
+
 	}
