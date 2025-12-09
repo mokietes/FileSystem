@@ -783,4 +783,11 @@ void processcommand (char * cmd)
 	cmdv = NULL;
 	}
 
+	using_history();
+	stifle_history(200);	//max history entries
+        printf ("|---------------------------------|\n");
+        printf ("|------- Command ------|- Status -|\n");
+#if (CMDLS_ON == 1)
+        printf ("| ls                   |    ON    |\n");
+#else
 	}
