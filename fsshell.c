@@ -759,4 +759,12 @@ void processcommand (char * cmd)
 			}
 		}
 		
+#ifdef COMMAND_DEBUG
+	for (i = 0; i < cmdc; i++)
+		{
+		printf("%s: length %d\n", cmdv[i], strlen(cmdv[i]));
+		}
+#endif		
+	cmdv[cmdc] = 0;		//just be safe - null terminate array of arguments
+	
 	}
