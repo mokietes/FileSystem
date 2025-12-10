@@ -797,6 +797,11 @@ void processcommand (char * cmd)
 #else
         printf ("| cd                   |    OFF   |\n");  
 #endif
+#if (CMDMD_ON == 1)
+        printf ("| md                   |    ON    |\n");  
+#else
+        printf ("| md                   |    OFF   |\n");  
+#endif
 #if (CMDPWD_ON == 1)
         printf ("| pwd                  |    ON    |\n");  
 #else
