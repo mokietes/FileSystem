@@ -783,6 +783,16 @@ void processcommand (char * cmd)
 	cmdv = NULL;
 	}
 
+int main (int argc, char * argv[])
+	{
+	char * cmdin;
+	char * cmd;
+	HIST_ENTRY *he;
+	char * filename;
+	uint64_t volumeSize;
+	uint64_t blockSize;
+    int retVal;
+    
 	using_history();
 	stifle_history(200);	//max history entries
         printf ("|---------------------------------|\n");
