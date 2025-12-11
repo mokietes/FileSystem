@@ -826,4 +826,14 @@ int main (int argc, char * argv[])
 #else
         printf ("| pwd                  |    OFF   |\n");  
 #endif
+#if (CMDCP2FS_ON == 1)
+        printf ("| cp2fs                |    ON    |\n");  
+#else
+        printf ("| cp2fs                |    OFF   |\n");  
+#endif
+#if (CMDCP2L_ON == 1)
+        printf ("| cp2l                 |    ON    |\n");  
+#else
+        printf ("| cp2l                 |    OFF   |\n");
+#endif
 	}
