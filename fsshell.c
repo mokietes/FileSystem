@@ -807,6 +807,15 @@ int main (int argc, char * argv[])
 		return -1;
 		}
 		
+	retVal = startPartitionSystem (filename, &volumeSize, &blockSize);	
+	printf("Opened %s, Volume Size: %llu;  BlockSize: %llu; Return %d\n", filename, (ull_t)volumeSize, (ull_t)blockSize, retVal);
+
+	if (retVal != PART_NOERROR)
+		{
+		printf ("Start Partition Failed:  %d\n", retVal);
+		return (retVal);
+		}
+		
 	using_history();
 	stifle_history(200);	//max history entries
         printf ("|---------------------------------|\n");
