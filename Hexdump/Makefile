@@ -1,3 +1,10 @@
+# File: Standard Makefile for CSC415
+#
+# Using the command: make clean
+# will delete the executable and any object files in your directory.
+#
+
+
 ROOTNAME=hexdump
 HW=
 FOPTION=
