@@ -802,6 +802,11 @@ int main (int argc, char * argv[])
 		blockSize = atoll (argv[3]);
 		}
 	else
+		{
+		printf ("Usage: fsLowDriver volumeFileName volumeSize blockSize\n");
+		return -1;
+		}
+		
 	using_history();
 	stifle_history(200);	//max history entries
         printf ("|---------------------------------|\n");
@@ -835,6 +840,11 @@ int main (int argc, char * argv[])
         printf ("| cp                   |    ON    |\n");  
 #else
         printf ("| cp                   |    OFF   |\n");  
+#endif
+#if (CMDMV_ON == 1)
+        printf ("| mv                   |    ON    |\n");  
+#else
+        printf ("| mv                   |    OFF   |\n");  
 #endif
 #if (CMDCP2FS_ON == 1)
         printf ("| cp2fs                |    ON    |\n");  
