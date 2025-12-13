@@ -824,6 +824,12 @@ int main (int argc, char * argv[])
 		closePartitionSystem();
 		return (retVal);
 		}
+
+	if (argc > 4)
+		if(strcmp("lowtest", argv[4]) == 0)
+			runFSLowTest();
+
+
 	using_history();
 	stifle_history(200);	//max history entries
         printf ("|---------------------------------|\n");
