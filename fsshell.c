@@ -816,6 +816,14 @@ int main (int argc, char * argv[])
 		return (retVal);
 		}
 		
+	retVal = initFileSystem (volumeSize / blockSize, blockSize);
+	
+	if (retVal != 0)
+		{
+		printf ("Initialize File System Failed:  %d\n", retVal);
+		closePartitionSystem();
+		return (retVal);
+		}
 	using_history();
 	stifle_history(200);	//max history entries
         printf ("|---------------------------------|\n");
