@@ -889,4 +889,13 @@ int main (int argc, char * argv[])
 #else
         printf ("| cp2l                 |    OFF   |\n");
 #endif
+        printf ("|---------------------------------|\n");
+
+	
+	while (1)
+		{
+		cmdin = readline("Prompt > ");
+#ifdef COMMAND_DEBUG
+		printf ("%s\n", cmdin);
+#endif
 	}
