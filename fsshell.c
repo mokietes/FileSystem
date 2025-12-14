@@ -859,6 +859,11 @@ int main (int argc, char * argv[])
 #else
         printf ("| touch                |    OFF   |\n");  
 #endif
+#if (CMDCAT_ON == 1)
+        printf ("| cat                  |    ON    |\n");  
+#else
+        printf ("| cat                  |    OFF   |\n");  
+#endif
 #if (CMDRM_ON == 1)
         printf ("| rm                   |    ON    |\n");  
 #else
