@@ -898,4 +898,10 @@ int main (int argc, char * argv[])
 #ifdef COMMAND_DEBUG
 		printf ("%s\n", cmdin);
 #endif
+		
+		cmd = malloc (strlen(cmdin) + 30);
+		strcpy (cmd, cmdin);
+		free (cmdin);
+		cmdin = NULL;
+		
 	}
