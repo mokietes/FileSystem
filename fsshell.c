@@ -904,4 +904,14 @@ int main (int argc, char * argv[])
 		free (cmdin);
 		cmdin = NULL;
 		
+		if (strcmp (cmd, "exit") == 0)
+			{
+			free (cmd);
+			cmd = NULL;
+			exitFileSystem();
+			closePartitionSystem();
+			// exit while loop and terminate shell
+			break;
+			}
+			
 	}
