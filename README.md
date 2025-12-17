@@ -1,3 +1,19 @@
+# CSC415 Group Term Assignment - File System
+
+This is a GROUP assignment written in C.  Only one person on the team needs to submit the project.
+
+**Assignment Purpose and Learning Outcomes:**
+- Large scale project planning
+- Working in groups
+- Understanding the file system
+- Understanding of low level file functionality
+- Multi-Phased Project (multiple due dates)
+- Advanced buffering
+- Freespace allocation and release management
+- Persistence
+- Directory structures
+- Tracking file information 
+
 ```
 int fs_mkdir(const char *pathname, mode_t mode);
 int fs_rmdir(const char *pathname);
