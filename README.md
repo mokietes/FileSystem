@@ -28,6 +28,23 @@ This is a GROUP assignment written in C.  Only one person on the team needs to s
 Each .c and .h file must have a standard header as defined below.  Make sure to put in your section number (replace the #), your name, your student IDs, a proper project name, GitHub name, Group name, filename, and description of the project.  Do not alter the number of asterisks and ensure that the header starts on line 1 of the file.
 
 ```
+/**************************************************************
+* Class::  CSC-415-0# Spring 2025
+* Name::
+* Student IDs::
+* GitHub-Name::
+* Group-Name::
+* Project:: Basic File System
+*
+* File:: <name of this file>
+*
+* Description::
+*
+**************************************************************/
+```
+
+
+```
 int fs_mkdir(const char *pathname, mode_t mode);
 int fs_rmdir(const char *pathname);
 fdDir * fs_opendir(const char *pathname);
