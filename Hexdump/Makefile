@@ -16,6 +16,11 @@
 #
 # RUNOPTIONS can be set to default values you want passed into the program
 # this can also be overridden on the command line
+#
+# OBJ - You can append to this line for additional files necessary for
+# your program, but only when you have multiple files.  Follow the convention
+# but hard code the suffix as needed.
+#
 # Using the command: make clean
 # will delete the executable and any object files in your directory.
 #
