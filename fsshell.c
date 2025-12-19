@@ -914,4 +914,11 @@ int main (int argc, char * argv[])
 			break;
 			}
 			
+		if ((cmd != NULL) && (strlen(cmd) > 0))
+			{
+			he = history_get(history_length);
+			if (!((he != NULL) && (strcmp(he->line, cmd)==0)))
+				{
+				add_history(cmd);
+				}
 	}
