@@ -921,4 +921,10 @@ int main (int argc, char * argv[])
 				{
 				add_history(cmd);
 				}
+			processcommand (cmd);
+			}
+				
+		free (cmd);
+		cmd = NULL;		
+		} // end while
 	}
