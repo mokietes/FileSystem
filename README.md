@@ -45,6 +45,14 @@ Each .c and .h file must have a standard header as defined below.  Make sure to 
 
 
 ```
+b_io_fd b_open (char * filename, int flags);
+int b_read (b_io_fd fd, char * buffer, int count);
+int b_write (b_io_fd fd, char * buffer, int count);
+int b_seek (b_io_fd fd, off_t offset, int whence);
+int b_close (b_io_fd fd);
+
+```
+```
 int fs_mkdir(const char *pathname, mode_t mode);
 int fs_rmdir(const char *pathname);
 fdDir * fs_opendir(const char *pathname);
