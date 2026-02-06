@@ -297,6 +297,7 @@ int b_write(b_io_fd fd, char *buffer, int count)
                 LBAwrite(fcb->buf, 1, fcb->blockLoc + fcb->bufBlock);
             fcb->bufBlock = blockOffset;
             fcb->dirty = 0;
+            memset(fcb->buf, 0, vcb->blockSize);
         }
 
         memcpy(fcb->buf + offset, buffer, toWrite);
