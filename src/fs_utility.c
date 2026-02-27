@@ -194,19 +194,16 @@ char *fs_getcwd(char *buf, size_t size)
 */
 
 int fs_setcwd(char *pathname) {
-    if (pathname == NULL) {
-        return -1;
-    }
+    if (pathname == NULL) return -1;
 
     ppInfo ppi;
-    int ppRet = parsePath(pathname, &ppi);
+    char *pathCopy = strdup(pathname);
+    if (pathCopy == NULL) return -1;
+    int ppRet = parsePath(pathCopy, &ppi);
+    free(pathCopy);
 
-    // Check if path is valid
-    if (ppRet != 0) {
-        return -1;
-    }
+    if (ppRet != 0) return -1;
 
-    // Handle root directory case
     if (ppi.index == -2) {
         if (cwDir != rootDir) {
             safeFree(cwDir);
@@ -216,29 +213,24 @@ int fs_setcwd(char *pathname) {
         return 0;
     }
 
-    // Check if last element exists
     if (ppi.index == -1) {
         safeFree(ppi.parent);
         return -1;
     }
 
-    // Verify it's a directory using the result already in ppi
     if (ppi.parent[ppi.index].isDir != 1) {
         safeFree(ppi.parent);
         return -1;
     }
 
-    // Load the new directory
     dirEntry *newDir = loadDir(&ppi.parent[ppi.index]);
     if (newDir == NULL) {
         safeFree(ppi.parent);
         return -1;
     }
 
-    // Update current working directory
     safeFree(cwDir);
     cwDir = newDir;
-
     safeFree(ppi.parent);
     return 0;
 }
@@ -257,7 +249,9 @@ int fs_isFile(char *filename)
     free(copy);
     if (ret != 0 || info.index == -1 || !info.parent)
         return 0;
-    return (info.parent[info.index].isDir == 0);
+    int result = (info.parent[info.index].isDir == 0);
+    safeFree(info.parent);
+    return result;
 }
 
 /*
@@ -272,7 +266,9 @@ int fs_isDir(char *pathname)
     int ret = parsePath(copy, &info);
     free(copy);
     if (ret != 0) return 0;
-    if (info.index == -2) return 1;   // root is always a directory
+    if (info.index == -2) return 1;
     if (info.index == -1 || !info.parent) return 0;
-    return (info.parent[info.index].isDir == 1);
+    int result = (info.parent[info.index].isDir == 1);
+    safeFree(info.parent);
+    return result;
 }
