@@ -125,26 +125,37 @@ b_io_fd b_open(char *filename, int flags)
 {
     if (startup == 0) b_init();
 
-    b_io_fd fd = b_getFCB();  // get free file control block
+    b_io_fd fd = b_getFCB();
     if (fd < 0) return -1;
 
     ppInfo info;
     char *pathCopy = strdup(filename);
     if (pathCopy == NULL) return -1;
-    int parseRet = parsePath(pathCopy, &info);
-    free(pathCopy);
-    if (parseRet != 0) return -1;
+
+    if (parsePath(pathCopy, &info) != 0) {
+        free(pathCopy);
+        return -1;
+    }
 
     dirEntry *target = NULL;
 
     if (info.index == -1) {
-        if (!(flags & O_CREAT)) return -1;
+        if (!(flags & O_CREAT)) {
+            free(pathCopy);
+            return -1;
+        }
 
         target = findFreeDirEntry(&info.parent);
-        if (!target) return -1;
+        if (!target) {
+            free(pathCopy);
+            return -1;
+        }
 
         int block = allocBlocks(1);
-        if (block == -1) return -1;
+        if (block == -1) {
+            free(pathCopy);
+            return -1;
+        }
 
         time_t now = time(NULL);
         strncpy(target->name, info.lastElement, MAX_NAME);
@@ -156,32 +167,41 @@ b_io_fd b_open(char *filename, int flags)
         target->modifyTime = now;
         target->accessTime = now;
 
+        // If parent is root, mirror the new entry into global in-memory rootDir
+        if (info.parent[0].blockLoc == rootDir[0].blockLoc) {
+            int idx = (int)(target - info.parent);
+            rootDir[idx] = *target;
+        }
+
         saveDir(info.parent);
+
     } else {
         target = &info.parent[info.index];
 
         time_t now = time(NULL);
         target->accessTime = now;
         target->modifyTime = now;
-        if (target->isDir) return -1;
+        if (target->isDir) {
+            free(pathCopy);
+            return -1;
+        }
     }
+
+    // Safe to free now — done with info.lastElement
+    free(pathCopy);
 
     fcbArray[fd].buf = malloc(vcb->blockSize);
     fcbArray[fd].index = 0;
     fcbArray[fd].buflen = 0;
     fcbArray[fd].blockLoc = target->blockLoc;
     fcbArray[fd].fileSize = target->size;
-    fcbArray[fd].flags = flags;
-    fcbArray[fd].dirty = 0;
-    fcbArray[fd].entry = target;
-
-    fcbArray[fd].parent = info.parent;
-
-
     fcbArray[fd].allocatedBlocks = (target->size + vcb->blockSize - 1) / vcb->blockSize;
     if (fcbArray[fd].allocatedBlocks == 0) fcbArray[fd].allocatedBlocks = 1;
     fcbArray[fd].bufBlock = 0;
-
+    fcbArray[fd].flags = flags;
+    fcbArray[fd].dirty = 0;
+    fcbArray[fd].entry = target;
+    fcbArray[fd].parent = info.parent;
 
     return fd;
 }
@@ -233,6 +253,14 @@ int growFile(b_fcb *fcb, int neededBlocks)
     fcb->allocatedBlocks = neededBlocks;
     fcb->entry->blockLoc = newBlockLoc;
 
+
+    // Sync blockLoc to cwDir/rootDir if this file lives in one of them
+    int syncIdx = (int)(fcb->entry - fcb->parent);
+    if (cwDir[0].blockLoc == fcb->parent[0].blockLoc)
+        cwDir[syncIdx].blockLoc = newBlockLoc;
+    if (rootDir[0].blockLoc == fcb->parent[0].blockLoc)
+        rootDir[syncIdx].blockLoc = newBlockLoc;
+
     return 0;
 }
 
@@ -254,6 +282,12 @@ int b_write(b_io_fd fd, char *buffer, int count)
         int toWrite = (count < space) ? count : space;
 
         if (blockOffset >= fcb->allocatedBlocks) {
+            // Flush dirty buffer to disk BEFORE growFile reads it,
+            // so the copy to the new location gets the correct data
+            if (fcb->dirty) {
+                LBAwrite(fcb->buf, 1, fcb->blockLoc + fcb->bufBlock);
+                fcb->dirty = 0;
+            }
             if (growFile(fcb, blockOffset + 1) != 0)
                 return totalWritten;
         }
@@ -363,6 +397,14 @@ int b_close(b_io_fd fd)
 
 	// Save updated file size and modify time
     fcb->entry->size = fcb->fileSize;
+
+    // Sync size to cwDir/rootDir if this file lives in one of them
+    int syncIdx = (int)(fcb->entry - fcb->parent);
+    if (cwDir[0].blockLoc == fcb->parent[0].blockLoc)
+        cwDir[syncIdx].size = fcb->fileSize;
+    if (rootDir[0].blockLoc == fcb->parent[0].blockLoc)
+        rootDir[syncIdx].size = fcb->fileSize;
+
     fcb->entry->modifyTime = time(NULL);
 
 	//Save parent's directory changes
