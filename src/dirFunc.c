@@ -57,6 +57,13 @@ int fs_mkdir(const char *pathname, mode_t mode) {
     newEntry->isDir = newDir[0].isDir;
     strncpy(newEntry->name, ppi.lastElement, MAX_NAME);
 
+    // If parent is root, mirror the new entry into the global in-memory rootDir
+    // so subsequent parsePath calls see the new directory immediately
+    if (ppi.parent[0].blockLoc == rootDir[0].blockLoc) {
+        int idx = (int)(newEntry - ppi.parent);
+        rootDir[idx] = *newEntry;
+    }
+
     // Save directory to disk
     saveDir(ppi.parent);
 
