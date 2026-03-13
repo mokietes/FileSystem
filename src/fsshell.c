@@ -304,6 +304,7 @@ int cmd_cat (int argcnt, char *argvec[])
                 buf[readcnt] = '\0';
                 printf("%s", buf);
                 } while (readcnt == BUFFERLEN-1);
+		printf("\n");
         b_close (testfs_src_fd);
 #endif
         return 0;
