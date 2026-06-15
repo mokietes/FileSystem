@@ -49,9 +49,9 @@ ADDOBJ= $(OBJ_DIR)/fsInit.o $(OBJ_DIR)/vcb.o $(OBJ_DIR)/freeSpace.o $(OBJ_DIR)/b
 ARCH = $(shell uname -m)
 
 ifeq ($(ARCH), aarch64)
-	ARCHOBJ=fsLowM1.o 
+	ARCHOBJ=$(OBJ_DIR)/fsLowM1.o
 else
-	ARCHOBJ=fsLow.o
+	ARCHOBJ=$(OBJ_DIR)/fsLow.o
 endif
 
 OBJ = $(OBJ_DIR)/$(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ARCHOBJ)
@@ -80,7 +80,7 @@ $(ROOTNAME)$(HW)$(FOPTION): $(OBJ)
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(ROOTNAME)$(HW)$(FOPTION)
-	
+
 run: $(ROOTNAME)$(HW)$(FOPTION)
 	./$(ROOTNAME)$(HW)$(FOPTION) $(RUNOPTIONS)
 
