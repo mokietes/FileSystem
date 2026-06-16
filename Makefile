@@ -42,8 +42,10 @@ CC=gcc
 CFLAGS= -g -Iinclude
 LIBS =pthread
 DEPS = 
+OBJ_DIR=obj
+
 # Add any additional objects to this list
-ADDOBJ= fsInit.o vcb.o freeSpace.o bitmap.o dirEntry.o parsePath.o dirFunc.o fs_utility.o fs_stat.o fs_delete.o b_io.o
+ADDOBJ= $(OBJ_DIR)/fsInit.o $(OBJ_DIR)/vcb.o $(OBJ_DIR)/freeSpace.o $(OBJ_DIR)/bitmap.o $(OBJ_DIR)/dirEntry.o $(OBJ_DIR)/parsePath.o $(OBJ_DIR)/dirFunc.o $(OBJ_DIR)/fs_utility.o $(OBJ_DIR)/fs_stat.o $(OBJ_DIR)/fs_delete.o $(OBJ_DIR)/b_io.o
 ARCH = $(shell uname -m)
 
 ifeq ($(ARCH), aarch64)
@@ -52,19 +54,33 @@ else
 	ARCHOBJ=fsLow.o
 endif
 
-OBJ = $(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ARCHOBJ)
+OBJ = $(OBJ_DIR)/$(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ARCHOBJ)
+
 
 vpath %.c src
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS) 
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
+$(OBJ_DIR)/%.o: %.c $(DEPS) | $(OBJ_DIR)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(OBJ_DIR)/fsLow.o: fsLow.o | $(OBJ_DIR)
+	cp fsLow.o $(OBJ_DIR)/fsLow.o
+
+$(OBJ_DIR)/fsLowM1.o: fsLowM1.o | $(OBJ_DIR)
+	cp fsLowM1.o $(OBJ_DIR)/fsLowM1.o
+	
 $(ROOTNAME)$(HW)$(FOPTION): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) -lm -l readline -l $(LIBS)
 
-clean:
-	rm $(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ROOTNAME)$(HW)$(FOPTION)
+# clean:
+# 	rm $(ROOTNAME)$(HW)$(FOPTION).o $(ADDOBJ) $(ROOTNAME)$(HW)$(FOPTION)
 
+clean:
+	rm -rf $(OBJ_DIR)
+	rm -f $(ROOTNAME)$(HW)$(FOPTION)
+	
 run: $(ROOTNAME)$(HW)$(FOPTION)
 	./$(ROOTNAME)$(HW)$(FOPTION) $(RUNOPTIONS)
 
