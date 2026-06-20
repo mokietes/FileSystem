@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "stddef.h": "c",
+        "stdio.h": "c",
+        "mfs.h": "c",
+        "dirent.h": "c"
+    }
+}
