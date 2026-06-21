@@ -44,6 +44,8 @@ LIBS =pthread
 DEPS = 
 OBJ_DIR=obj
 
+.DEFAULT_GOAL := $(ROOTNAME)$(HW)$(FOPTION)
+
 # Add any additional objects to this list
 ADDOBJ= $(OBJ_DIR)/fsInit.o $(OBJ_DIR)/vcb.o $(OBJ_DIR)/freeSpace.o $(OBJ_DIR)/bitmap.o $(OBJ_DIR)/dirEntry.o $(OBJ_DIR)/parsePath.o $(OBJ_DIR)/dirFunc.o $(OBJ_DIR)/fs_utility.o $(OBJ_DIR)/fs_stat.o $(OBJ_DIR)/fs_delete.o $(OBJ_DIR)/b_io.o
 ARCH = $(shell uname -m)
