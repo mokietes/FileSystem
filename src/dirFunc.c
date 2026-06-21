@@ -47,7 +47,7 @@ int fs_mkdir(const char *pathname, mode_t mode) {
 
     // Link the new directory to its parent through
     // a new directory entry it its parent
-    dirEntry *newEntry = findFreeDirEntry(ppi.parent);
+    dirEntry *newEntry = findFreeDirEntry(&ppi.parent);
 
     newEntry->size = newDir[0].size;
     newEntry->createTime = newDir[0].createTime;
@@ -125,7 +125,8 @@ int fs_rmdir(const char *pathname) {
     return 0;
 }
 
-dirEntry * findFreeDirEntry(dirEntry *de) {
+dirEntry * findFreeDirEntry(dirEntry **de_ptr) {
+    dirEntry *de = *de_ptr;
     int numEntries = de[0].size / sizeof(dirEntry);
 
     for (int i = 0; i < numEntries; i++) {
@@ -135,54 +136,63 @@ dirEntry * findFreeDirEntry(dirEntry *de) {
     }
 
     int newNumEntries = numEntries * CHANGE_DIR_FACTOR;
-    // call function to expand directory
-    if (changeDirSize(de, newNumEntries) != -1) {
+    if (changeDirSize(de_ptr, newNumEntries) != -1) {
+        de = *de_ptr;   // de_ptr may now point at a relocated buffer
         return &de[numEntries];
     }
 
     return NULL;
 }
 
-int changeDirSize(dirEntry *de, int newCountEntries) {
-    // Check if directory size needs to change
+
+int changeDirSize(dirEntry **de_ptr, int newCountEntries) {
+    dirEntry *de = *de_ptr;
+
     int curCountEntries = de[0].size / sizeof(dirEntry);
     if (curCountEntries == newCountEntries) {
         return -1;
     }
 
-    // Get the block size and number of blocks the directory currently occupies
     int blockSize = vcb->blockSize;
     int curBlocks = (de[0].size + blockSize - 1) / blockSize;
 
-    // Calculate needed fields for newCountEntries
     int memNeeded = newCountEntries * sizeof(dirEntry);
-    int blocksNeeded = (memNeeded + blockSize - 1)/ blockSize;
+    int blocksNeeded = (memNeeded + blockSize - 1) / blockSize;
     int memActual = blocksNeeded * blockSize;
     int newActualEntries = memActual / sizeof(dirEntry);
 
-    // Check again if the directory size needs to change, this time comparing blocks
     if (curBlocks == blocksNeeded) {
         return -1;
     }
 
-    // If directory can be shrinked, release the unneeded blocks
     if (curBlocks > blocksNeeded) {
         de[0].size = sizeof(dirEntry) * newActualEntries;
         releaseBlocks(de[0].blockLoc + blocksNeeded, curBlocks - blocksNeeded);
+        saveDir(de);
         return newActualEntries;
     }
 
-    // If directory needs to expand, relocate the directory and
-    // release the old directory blocks
     if (curBlocks < blocksNeeded) {
         dirEntry *newDir = createDir(newCountEntries, &de[1]);
-        memcpy(newDir, de, de[0].size);
+        int newBlockLoc = newDir[0].blockLoc;   // save before memcpy overwrites it
+
+        memcpy(newDir, de, de[0].size);          // bring over all existing entries
+
+        // memcpy just clobbered "." with the OLD location/size — restore both
+        newDir[0].blockLoc = newBlockLoc;
+        newDir[0].size = sizeof(dirEntry) * newActualEntries;
+
         releaseBlocks(de[0].blockLoc, curBlocks);
-        
-        de = newDir;
+        saveDir(newDir);
+
+        safeFree(de);
+        *de_ptr = newDir;
         return newActualEntries;
     }
+
+    return -1;
 }
+
 
 void saveDir(dirEntry *de) {
     int blockSize = vcb->blockSize;

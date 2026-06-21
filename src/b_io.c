@@ -135,7 +135,7 @@ b_io_fd b_open(char *filename, int flags)
     if (info.index == -1) {
         if (!(flags & O_CREAT)) return -1;
 
-        target = findFreeDirEntry(info.parent);
+        target = findFreeDirEntry(&info.parent);
         if (!target) return -1;
 
         int block = allocBlocks(1);
