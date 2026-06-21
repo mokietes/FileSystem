@@ -41,6 +41,8 @@ typedef struct b_fcb
 	int buflen;		//holds how many valid bytes are in the buffer
 	int blockLoc;
     int fileSize;
+    int allocatedBlocks;   // how many blocks are currently reserved
+    int bufBlock;          // which block-within-file is cached in buf
     int flags;
     int dirty;
     dirEntry *entry;
@@ -172,6 +174,12 @@ b_io_fd b_open(char *filename, int flags)
 
     fcbArray[fd].parent = info.parent;
 
+
+    fcbArray[fd].allocatedBlocks = (target->size + vcb->blockSize - 1) / vcb->blockSize;
+    if (fcbArray[fd].allocatedBlocks == 0) fcbArray[fd].allocatedBlocks = 1;
+    fcbArray[fd].bufBlock = -1;
+
+
     return fd;
 }
 
@@ -201,6 +209,29 @@ int b_seek(b_io_fd fd, off_t offset, int whence)
     return fcb->index;
 }
 
+
+// Relocates the file to a new, larger contiguous block range when it
+// outgrows its current allocation. Returns 0 on success, -1 if the
+// volume has no room for the larger extent.
+int growFile(b_fcb *fcb, int neededBlocks)
+{
+    int newBlockLoc = allocBlocks(neededBlocks);
+    if (newBlockLoc == -1) return -1;
+
+    if (fcb->allocatedBlocks > 0) {
+        char *tmp = malloc(fcb->allocatedBlocks * vcb->blockSize);
+        LBAread(tmp, fcb->allocatedBlocks, fcb->blockLoc);
+        LBAwrite(tmp, fcb->allocatedBlocks, newBlockLoc);
+        free(tmp);
+        releaseBlocks(fcb->blockLoc, fcb->allocatedBlocks);
+    }
+
+    fcb->blockLoc = newBlockLoc;
+    fcb->allocatedBlocks = neededBlocks;
+    fcb->entry->blockLoc = newBlockLoc;
+
+    return 0;
+}
 
 
 // Interface to write function	
@@ -289,8 +320,8 @@ int b_read(b_io_fd fd, char *buffer, int count)
         int space = vcb->blockSize - offset;			// Space left in block
         int toRead = (count < space) ? count : space;	// Read only what fits
 
-		// Load block from disk
-        LBAread(fcb->buf, 1, fcb->blockLoc);
+		int blockOffset = fcb->index / vcb->blockSize;
+        LBAread(fcb->buf, 1, fcb->blockLoc + blockOffset);
 
 		// Copy to user's buffer
         memcpy(buffer, fcb->buf + offset, toRead);
@@ -315,7 +346,7 @@ int b_close(b_io_fd fd)
 
 	// If buffer modified write to disk
     if (fcb->dirty)
-        LBAwrite(fcb->buf, 1, fcb->blockLoc);
+        LBAwrite(fcb->buf, 1, fcb->blockLoc + fcb->bufBlock);
 
 	// Save updated file size and modify time
     fcb->entry->size = fcb->fileSize;
