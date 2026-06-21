@@ -143,5 +143,7 @@ int releaseBlocks(int blockLoc, int numBlocks) {
     int bitmapBlocks = vcb->bitmapBlocks;
     LBAwrite(freeSpaceMap, bitmapBlocks, BITMAP_START);
 
+    vcb->totalFreeSpace += numBlocks;
+
     return 0;
 }
