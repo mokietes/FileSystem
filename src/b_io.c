@@ -245,12 +245,22 @@ int b_write(b_io_fd fd, char *buffer, int count)
     int totalWritten = 0;
 
     while (count > 0) {
-        int offset = fcb->index % vcb->blockSize;
+        int blockOffset = fcb->index / vcb->blockSize;
+        int offset       = fcb->index % vcb->blockSize;
         int space = vcb->blockSize - offset;
         int toWrite = (count < space) ? count : space;
 
-        if (offset == 0 && fcb->dirty)
-            LBAwrite(fcb->buf, 1, fcb->blockLoc);
+        if (blockOffset >= fcb->allocatedBlocks) {
+            if (growFile(fcb, blockOffset + 1) != 0)
+                return totalWritten;
+        }
+
+        if (blockOffset != fcb->bufBlock) {
+            if (fcb->dirty)
+                LBAwrite(fcb->buf, 1, fcb->blockLoc + fcb->bufBlock);
+            fcb->bufBlock = blockOffset;
+            fcb->dirty = 0;
+        }
 
         memcpy(fcb->buf + offset, buffer, toWrite);
         fcb->dirty = 1;
