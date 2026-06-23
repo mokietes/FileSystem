@@ -115,12 +115,19 @@ int fs_rmdir(const char *pathname) {
 
     releaseBlocks(thisDir[0].blockLoc, dirBlocks);
 
-    // Mark the directory entry as used
+    // Mark the directory entry as unused
     ppi.parent[ppi.index].name[0] = '\0';
+
+    // If parent is root, update the global in-memory rootDir directly
+    // so subsequent ls calls see the change without a reload from disk
+    if (ppi.parent[0].blockLoc == rootDir[0].blockLoc) {
+        rootDir[ppi.index].name[0] = '\0';
+    }
+
     saveDir(ppi.parent);
 
     free(thisDir);
-    safeFree(ppi.parent); // NOT ROOT OR CWD
+    safeFree(ppi.parent);
     ppi.parent = NULL;
 
     return 0;
