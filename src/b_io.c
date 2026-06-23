@@ -129,8 +129,11 @@ b_io_fd b_open(char *filename, int flags)
     if (fd < 0) return -1;
 
     ppInfo info;
-    if (parsePath(filename, &info) != 0)
-        return -1;
+    char *pathCopy = strdup(filename);
+    if (pathCopy == NULL) return -1;
+    int parseRet = parsePath(pathCopy, &info);
+    free(pathCopy);
+    if (parseRet != 0) return -1;
 
     dirEntry *target = NULL;
 
@@ -177,7 +180,7 @@ b_io_fd b_open(char *filename, int flags)
 
     fcbArray[fd].allocatedBlocks = (target->size + vcb->blockSize - 1) / vcb->blockSize;
     if (fcbArray[fd].allocatedBlocks == 0) fcbArray[fd].allocatedBlocks = 1;
-    fcbArray[fd].bufBlock = -1;
+    fcbArray[fd].bufBlock = 0;
 
 
     return fd;
