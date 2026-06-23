@@ -222,8 +222,8 @@ int fs_setcwd(char *pathname) {
         return -1;
     }
 
-    // Verify it's a directory
-    if (fs_isDir(pathname) != 1) {
+    // Verify it's a directory using the result already in ppi
+    if (ppi.parent[ppi.index].isDir != 1) {
         safeFree(ppi.parent);
         return -1;
     }
@@ -251,9 +251,12 @@ int fs_setcwd(char *pathname) {
 int fs_isFile(char *filename)
 {
     ppInfo info;
-    if (parsePath(filename, &info) != 0 || info.index == -1 || !info.parent)
+    char *copy = strdup(filename);
+    if (!copy) return 0;
+    int ret = parsePath(copy, &info);
+    free(copy);
+    if (ret != 0 || info.index == -1 || !info.parent)
         return 0;
-
     return (info.parent[info.index].isDir == 0);
 }
 
