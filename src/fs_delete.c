@@ -59,6 +59,12 @@ int fs_delete(char* filename) {
 
     // Mark the directory entry as unused
     ppi.parent[ppi.index].name[0] = '\0';
+
+    // If parent is root, mirror the change into the global in-memory rootDir
+    if (ppi.parent[0].blockLoc == rootDir[0].blockLoc) {
+        rootDir[ppi.index].name[0] = '\0';
+    }
+
     saveDir(ppi.parent);
 
     safeFree(ppi.parent);
