@@ -87,11 +87,12 @@ int fs_rmdir(const char *pathname) {
     if (ppi.index == -2) return -1; 
 
     // Check if last element of the path is a directory
-    if (fs_isDir(pathCopy) != 1) {
+    if (ppi.parent[ppi.index].isDir != 1) {
         safeFree(ppi.parent);
         ppi.parent = NULL;
         return -1;
     }
+
 
     dirEntry *thisDir = loadDir(&ppi.parent[ppi.index]);
     if (thisDir == NULL) {

@@ -267,8 +267,12 @@ int fs_isFile(char *filename)
 int fs_isDir(char *pathname)
 {
     ppInfo info;
-    if (parsePath(pathname, &info) != 0 || info.index == -1 || !info.parent)
-        return 0;
-
+    char *copy = strdup(pathname);
+    if (!copy) return 0;
+    int ret = parsePath(copy, &info);
+    free(copy);
+    if (ret != 0) return 0;
+    if (info.index == -2) return 1;   // root is always a directory
+    if (info.index == -1 || !info.parent) return 0;
     return (info.parent[info.index].isDir == 1);
 }

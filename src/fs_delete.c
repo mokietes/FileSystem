@@ -41,7 +41,7 @@ int fs_delete(char* filename) {
     if (ppi.index == -2) return -1; 
 
     // Check if last element of the path is a file
-    if (fs_isFile(pathCopy) != 1) {
+    if (ppi.parent[ppi.index].isDir != 0) {
         safeFree(ppi.parent);
         ppi.parent = NULL;
         return -1;
