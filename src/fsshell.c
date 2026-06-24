@@ -532,11 +532,10 @@ int cmd_cp2l (int argcnt, char *argvec[])
 	
 	testfs_fd = b_open (src, O_RDONLY);
 	linux_fd = open (dest, O_WRONLY | O_CREAT | O_TRUNC, PERMISSIONS);
-	do 
-		{
-		readcnt = b_read (testfs_fd, buf, BUFFERLEN);
-		write (linux_fd, buf, readcnt);
-		} while (readcnt == BUFFERLEN);
+	while ((readcnt = b_read (testfs_fd, buf, BUFFERLEN)) > 0)
+			{
+			write (linux_fd, buf, readcnt);
+			}
 	b_close (testfs_fd);
 	close (linux_fd);
 #endif
